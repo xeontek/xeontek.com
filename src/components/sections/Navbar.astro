@@ -3,13 +3,13 @@
 // import Support from "@megaMenu/Support.astro";
 // import Platform from "@megaMenu/Platform.astro";
 // import Features from "@megaMenu/Features.astro";
-// import Button from "@ui/Button.astro";
+import Button from "@ui/Button.astro";
 // import { navigationLinks } from "@utils/navigation";
 
 const currentPath = Astro.url.pathname;
 
 // Call-to-action configuration for the primary button
-const primaryCTA = { text: "Try Free", href: "https://github.com/mearashadowfax/DataNova" };
+const primaryCTA = { text: "Contact us", href: "https://github.com/mearashadowfax/DataNova" };
 ---
 
 <header
@@ -126,13 +126,12 @@ const primaryCTA = { text: "Try Free", href: "https://github.com/mearashadowfax/
           <div
             class="mt-5 flex flex-wrap items-center gap-x-1.5 xl:ml-6 xl:mt-0"
           >
-            <!-- <Button
+            <Button
               href={primaryCTA.href}
               variant="primary"
               target="_blank"
               className="inline-flex text-nowrap border-none py-2!"
-              >{primaryCTA.text}</Button
-            > -->
+              >{primaryCTA.text}</Button>
           </div>
         </div>
       </div>
