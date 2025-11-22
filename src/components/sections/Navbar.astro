@@ -1,10 +1,6 @@
 ---
-// import Downloads from "@megaMenu/Downloads.astro";
-// import Support from "@megaMenu/Support.astro";
-// import Platform from "@megaMenu/Platform.astro";
-// import Features from "@megaMenu/Features.astro";
 import Button from "@ui/Button.astro";
-// import { navigationLinks } from "@utils/navigation";
+
 
 const currentPath = Astro.url.pathname;
 
@@ -94,32 +90,33 @@ const primaryCTA = { text: "Contact us", href: "https://github.com/mearashadowfa
               >
                 Home
               </a>
-
-              <!-- <Features />
-
-              <Platform />
-
-              <Downloads />
-
-              <Support /> -->
-
-              <!-- {
-                navigationLinks.map((link) => (
-                  <a
-                    href={link.href}
-                    class={`flex items-center rounded-lg p-2 font-medium text-slate-800 hover:bg-slate-100 focus:bg-slate-100 focus:outline-hidden ${
-                      currentPath === link.href
-                        ? "underline underline-offset-4"
-                        : ""
-                    }`}
-                    aria-current={
-                      currentPath === link.href ? "page" : undefined
-                    }
-                  >
-                    {link.label}
-                  </a>
-                ))
-              } -->
+              <a
+                href="/"
+                class={`flex items-center rounded-lg p-2 font-medium text-slate-800 hover:bg-slate-100 focus:bg-slate-100 focus:outline-hidden ${
+                  currentPath === "/who" ? "underline underline-offset-4" : ""
+                }`}
+                aria-current={currentPath === "/who" ? "page" : undefined}
+              >
+                Who are we
+            </a>
+            <a
+                href="/"
+                class={`flex items-center rounded-lg p-2 font-medium text-slate-800 hover:bg-slate-100 focus:bg-slate-100 focus:outline-hidden ${
+                  currentPath === "/what" ? "underline underline-offset-4" : ""
+                }`}
+                aria-current={currentPath === "/what" ? "page" : undefined}
+              >
+                What we do
+            </a>
+            <a
+                href="/"
+                class={`flex items-center rounded-lg p-2 font-medium text-slate-800 hover:bg-slate-100 focus:bg-slate-100 focus:outline-hidden ${
+                  currentPath === "/contact" ? "underline underline-offset-4" : ""
+                }`}
+                aria-current={currentPath === "/contact" ? "page" : undefined}
+              >
+                Get in touch
+            </a>
             </div>
           </div>
 

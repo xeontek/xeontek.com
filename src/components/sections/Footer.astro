@@ -1,18 +1,18 @@
 ---
 // import FooterForm from "@ui/forms/FooterForm.astro";
-// import ContactInfo from "@common/ContactInfo.astro";
+import ContactInfo from "@common/ContactInfo.astro";
 
 // Props for customization
 const companyName = "XeonTek Ltd";
 const companyDescription =
-  "XeonTek is a leading business intelligence and analytics software company founded in 2018, with offices in London";
+  "XeonTek is a leading software company founded in 2013, with offices in London";
 
 // Contact information for the company
 const contactDetails = {
-  address: "Seattle, WA, 98104",
-  phone: "1 (833) 328-2669",
-  email: "info@datanova.com",
-  website: "www.datanova.com",
+  address: "27 Old Gloucester St",
+  street: "London WC1N 3AX",
+  email: "enquiries@xeontek.com",
+  website: "www.xeontek.com",
 };
 
 // Dynamic date for copyright display
@@ -20,7 +20,7 @@ const copyrightYear = new Date().getFullYear();
 
 // Trademark notice
 const trademarkNotice =
-  "Microsoft&reg; and Excel&reg; are registered trademarks or trademarks of Microsoft Corporation";
+  "";
 ---
 
 <footer
@@ -45,12 +45,12 @@ const trademarkNotice =
       </div>
 
       {/* Contact Information Section */}
-      <!-- <div class="col-span-1 md:col-span-2 xl:col-span-1 xl:col-start-3">
+     <div class="col-span-1 md:col-span-2 xl:col-span-1 xl:col-start-3">
         <ContactInfo {...contactDetails} />
       </div>
 
       {/* Email Subscription Form */}
-      <div class="col-span-2 md:col-span-3 xl:col-span-2">
+      <!-- <div class="col-span-2 md:col-span-3 xl:col-span-2">
         <h3 class="font-semibold text-slate-700">More information?</h3>
         <FooterForm />
       </div> -->
