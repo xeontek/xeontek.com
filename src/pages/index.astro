@@ -10,7 +10,9 @@ import BaseLayout from "@layout/BaseLayout.astro";
 			class="mx-auto max-w-[85rem] space-y-8 px-4 pt-48 pb-12 sm:px-6 lg:px-8"
 		>
 			<div class="mx-auto max-w-4xl text-left select-none sm:text-center">
-				<h1	class="block text-balance text-4xl text-slate-800 sm:text-5xl md:text-6xl lg:text-7xl">
+				<h1
+					class="block text-4xl text-balance text-slate-800 sm:text-5xl md:text-6xl lg:text-7xl"
+				>
 					Innovate. Build. <span class="font-semibold text-teal-700"
 						>Repeat</span
 					>
@@ -300,5 +302,30 @@ import BaseLayout from "@layout/BaseLayout.astro";
 				</div>
 			</div>
 		</section>
+		<style>
+			/* Styling for animated beam line connecting feature cards */
+			.beam-line {
+				stroke-dasharray: 200;
+				stroke-dashoffset: 200;
+				animation: beam-animation 5s ease-in-out infinite;
+			}
+
+			.line-connector:nth-of-type(2) .beam-line {
+				animation-delay: 2.5s;
+				animation-duration: 5s;
+			}
+
+			@keyframes beam-animation {
+				0% {
+					stroke-dashoffset: 200;
+				}
+				50% {
+					stroke-dashoffset: 0;
+				}
+				100% {
+					stroke-dashoffset: -200;
+				}
+			}
+		</style>
 	</section>
 </BaseLayout>
