@@ -1,32 +1,174 @@
 ---
 import BaseLayout from "@layout/BaseLayout.astro";
+import Icon from "@ui/icons/Icon.astro";
+import ContactForm from "@ui/forms/ContactForm.astro";
+import type { WithContext, Thing } from "schema-dts";
+
+const addressHeading = "Our address:";
+const emailHeading = "Contact us by email:";
+const careerBaseHeading = "Work with us.";
+
+const contactDetails = {
+  companyName: "XeonTek Ltd",
+  addressLine1: "27 Old Gloucester St",
+  addressLine2: "London, WC1N 3AX",
+  addressLine3: "United Kingdom",
+  email: "enquiries@xeontek.com",
+};
+
+const careerBaseDetails = {
+  description: "Looking for career opportunities at XeonTek?",
+  linkText: "Browse our open positions",
+  linkUrl: "/careers",
+};
+
+// Content for the page title and subtitle
+const title = "Contact us";
+const subTitle = "Questions, Comments or Feedback.";
+
+// SEO metadata for the page
+const seo = {
+  title: "Contact us - XeonTek",
+  description:
+    "Get in touch with XeonTek for inquiries, support, and feedback.",
+};
+
+// Schema.org metadata for SEO
+const schema: WithContext<Thing> = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  inLanguage: "en-GB",
+  "@id": Astro.url.href,
+  url: Astro.url.href,
+  name: "Contact XeonTek",
+  description:
+    "Reach out to XeonTek for any questions, support, or business inquiries. Our team is ready to assist you.",
+  isPartOf: {
+    "@type": "WebSite",
+    url: `${Astro.site}`,
+    name: "XeonTek",
+    description:
+      "XeonTek is a software company specializing in web and mobile applications.",
+  },
+};
 ---
 
-<BaseLayout>
-	<section
-		class="bg-linear-to-b/oklch from-teal-200 via-transparent to-white"
-	>
-		<div
-			class="mx-auto max-w-[85rem] space-y-8 px-4 pt-48 pb-12 sm:px-6 lg:px-8"
-		>
-			<h1 class="dm-sans text-4xl font-light text-slate-700 sm:text-5xl lg:text-6xl">
-                Contact Us				
-			</h1>
-		</div>
+<BaseLayout seo={seo} schema={schema}>
+  <div class="mx-auto max-w-[85rem] px-4 pb-28 pt-48 sm:px-6 lg:px-8">
+    <div class="mb-10 max-w-3xl lg:mb-14">
+      <h2
+        class="text-balance text-4xl text-slate-800 sm:text-5xl md:text-6xl lg:text-7xl"
+      >
+        {title}
+      </h2>
+      <p class="ml-1 mt-1 text-slate-600">{subTitle}</p>
+    </div>
 
-        <div class="mx-auto max-w-3xl px-4 pb-24 sm:px-6 lg:px-8">
-            <p class="mb-6 text-pretty text-slate-600">
-                This whitepaper outlines the vision, technology, and strategic roadmap of XeonTek Ltd. As a pioneering software company established in 2013, we are committed to delivering innovative solutions that drive growth and success for our clients worldwide.
-            </p>
-            <p class="mb-6 text-pretty text-slate-600">
-                Our core values of innovation, integrity, and customer-centricity guide our approach to product development and service delivery. This document provides insights into our technological advancements, market positioning, and future plans to maintain our leadership in the software industry.
-            </p>
-            <p class="mb-6 text-pretty text-slate-600">
-                We invite investors, partners, and stakeholders to explore this whitepaper to understand our commitment to excellence and our strategic initiatives aimed at shaping the future of technology.
-            </p>
-            <p class="text-pretty text-slate-600">
-                Join us as we continue to innovate, build, and repeat, delivering excellence every step of the way.
-            </p>
+    <div class="grid grid-cols-1 gap-x-10 md:grid-cols-2 lg:gap-x-16">
+      <div
+        class="mb-10 rounded-xl bg-teal-400 pb-10 md:order-2 md:mb-0 md:pb-0"
+      >
+        <ContactForm />
+      </div>
+
+      <div class="space-y-14">
+        <div class="flex gap-x-5">
+          <Icon name="mapPin" />
+          <div class="grow">
+            <h4 class="font-semibold text-slate-600">{addressHeading}</h4>
+
+            <address class="mt-1 text-sm not-italic text-slate-500">
+              {contactDetails.companyName}
+              <br />
+              {contactDetails.addressLine1}
+              <br />
+              {contactDetails.addressLine2}
+               <br />
+              {contactDetails.addressLine3}
+            </address>
+          </div>
         </div>
-	</section>
+
+        <div class="flex gap-x-5">
+          <Icon name="email" class="size-6 shrink-0 text-slate-600" />
+          <div class="grow">
+            <h4 class="font-semibold text-slate-600">{emailHeading}</h4>
+
+            <a
+              class="mt-1 text-sm text-slate-500 transition-colors duration-300 hover:text-slate-400 focus:text-slate-400 focus:outline-hidden"
+              href={`mailto:${contactDetails.email}`}
+            >
+              {contactDetails.email}
+            </a>
+          </div>
+        </div>
+
+        <div class="flex gap-x-5">
+          <Icon name="info" class="size-6 shrink-0 text-slate-600" />
+          <div class="grow">
+            <h4 class="font-semibold text-slate-600">{careerBaseHeading}</h4>
+            <p class="mt-1 text-sm text-slate-500">
+              {careerBaseDetails.description}
+            </p>
+            <p class="mt-2">
+              <a
+                class="group inline-flex items-center gap-x-2 text-sm font-medium text-slate-600 decoration-2 transition duration-300 hover:underline focus:underline focus:outline-hidden"
+                href={careerBaseDetails.linkUrl}
+              >
+                {careerBaseDetails.linkText}
+                <Icon name="chevronRight" />
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Automatically adjusting the height of the textarea
+    // based on its content. Triggers when the textarea content changes.
+    document.addEventListener("astro:page-load", () => {
+      function textareaAutoHeight(
+        el: HTMLTextAreaElement,
+        offsetTop: number = 0,
+      ): void {
+        el.style.height = "auto";
+        el.style.height = `${el.scrollHeight + offsetTop}px`;
+      }
+
+      (() => {
+        const textareas: string[] = ["#input-message"];
+
+        textareas.forEach((selector) => {
+          const textarea = document.querySelector(
+            selector,
+          ) as HTMLTextAreaElement;
+
+          if (!textarea) return;
+
+          const overlay = textarea.closest(".hs-overlay");
+
+          if (overlay) {
+            const instance = (window as any).HSOverlay.getInstance(
+              overlay,
+              true,
+            );
+
+            if (instance) {
+              instance.element.on("open", () =>
+                textareaAutoHeight(textarea, 3),
+              );
+            }
+          } else {
+            textareaAutoHeight(textarea, 3);
+          }
+
+          textarea.addEventListener("input", () => {
+            textareaAutoHeight(textarea, 3);
+          });
+        });
+      })();
+    });
+  </script>
 </BaseLayout>
