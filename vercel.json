@@ -4,34 +4,6 @@
       "source": "/(.*)",
       "headers": [
         {
-          "key": "Content-Security-Policy",
-          "value": "default-src 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-src 'self'; frame-ancestors 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://google-analytics.com https://vercel.live https://_vercel/insights/script.js; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://www.google-analytics.com https://stats.g.doubleclick.net; connect-src 'self' https://api.web3forms.com https://www.google-analytics.com https://analytics.google.com https://*.googleapis.com https://vercel.live; object-src 'none'; media-src 'self' https://vyclk3sx0z.ufs.sh; upgrade-insecure-requests; block-all-mixed-content"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "interest-cohort=()"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "no-referrer-when-downgrade"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "SAMEORIGIN"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        },
-        {
           "key": "Strict-Transport-Security",
           "value": "max-age=31536000; includeSubDomains; preload"
         }
