@@ -4,6 +4,7 @@ import { SEO, type Props as SEOProps } from "astro-seo";
 import { Schema } from "astro-seo-schema";
 import type { WithContext, Thing } from "schema-dts";
 import { AstroFont } from "astro-font";
+import Analytics from '@vercel/analytics/astro'
 import "@styles/global.css";
 
 import Navbar from "@sections/Navbar.astro";
@@ -125,6 +126,7 @@ const defaultSchema: WithContext<Thing> = {
 		<Navbar />
 		<main>
 			<slot />
+			<Analytics /> 
 		</main>
 		<Footer />
 	</body>
