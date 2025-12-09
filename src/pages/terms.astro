@@ -1,0 +1,139 @@
+---
+import BaseLayout from "@layout/BaseLayout.astro";
+
+var date = new Date().toISOString().split('T')[0];
+---
+
+<BaseLayout>
+    <section
+        class="bg-linear-to-b/oklch from-teal-200 via-transparent to-white"
+    >
+        <div
+            class="mx-auto max-w-[85rem] space-y-8 px-4 pt-48 pb-12 sm:px-6 lg:px-8"
+        >
+            <h1
+                class="dm-sans text-4xl font-light text-slate-700 sm:text-5xl lg:text-6xl"
+            >
+                Terms of Use
+            </h1>
+        </div>
+
+        <div class="mx-auto max-w-3xl px-4 pb-24 sm:px-6 lg:px-8">
+            <p class="mb-6 text-pretty text-slate-600">
+                These Terms of Use ("Terms") govern your access to and use of
+                the XeonTek Ltd. website and services. By accessing or using our
+                site, you agree to be bound by these Terms. If you do not agree,
+                do not use the site.
+            </p>
+
+            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+                1. Use of the Site
+            </h3>
+            <p class="mb-4 text-pretty text-slate-600">
+                You may use the site for lawful purposes only. You agree not to
+                use the site in any way that violates applicable laws or
+                third-party rights.
+            </p>
+
+            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+                2. Account Responsibility
+            </h3>
+            <p class="mb-4 text-pretty text-slate-600">
+                If you create an account, you are responsible for maintaining
+                the confidentiality of your credentials and for all activity
+                that occurs under your account.
+            </p>
+
+            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+                3. Intellectual Property
+            </h3>
+            <p class="mb-4 text-pretty text-slate-600">
+                All content on this site, including text, graphics, logos, and
+                software, is the property of XeonTek or its licensors and is
+                protected by copyright and other intellectual property laws. You
+                may not reproduce or distribute content without our written
+                permission.
+            </p>
+
+            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+                4. User Content
+            </h3>
+            <p class="mb-4 text-pretty text-slate-600">
+                By submitting content to the site, you grant XeonTek a
+                perpetual, royalty-free, worldwide license to use, reproduce,
+                and display that content in connection with the service. You
+                represent that you own or have the right to submit the content
+                and that it does not infringe third-party rights.
+            </p>
+
+            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+                5. Prohibited Conduct
+            </h3>
+            <ul class="mb-4 pl-5 text-pretty text-slate-600">
+                <li>Attempting to gain unauthorized access to our systems;</li>
+                <li>Transmitting harmful code or malware;</li>
+                <li>
+                    Scraping or otherwise extracting data without permission;
+                </li>
+                <li>
+                    Using the site for illegal activities or to harass others.
+                </li>
+            </ul>
+
+            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+                6. Disclaimers
+            </h3>
+            <p class="mb-4 text-pretty text-slate-600">
+                The site is provided "as is" and "as available" without
+                warranties of any kind. XeonTek disclaims all warranties,
+                express or implied, to the fullest extent permitted by law.
+            </p>
+
+            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+                7. Limitation of Liability
+            </h3>
+            <p class="mb-4 text-pretty text-slate-600">
+                To the maximum extent permitted by law, XeonTek will not be
+                liable for any indirect, incidental, special, consequential, or
+                punitive damages arising out of your use of the site.
+            </p>
+
+            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+                8. Indemnification
+            </h3>
+            <p class="mb-4 text-pretty text-slate-600">
+                You agree to indemnify and hold XeonTek harmless from any
+                claims, losses, liabilities, or expenses arising from your
+                violation of these Terms or your use of the site.
+            </p>
+
+            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+                9. Termination
+            </h3>
+            <p class="mb-4 text-pretty text-slate-600">
+                We may suspend or terminate your access for violating these
+                Terms or for any other reason at our discretion. Sections that
+                by their nature survive termination will continue to apply.
+            </p>
+
+            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+                10. Governing Law
+            </h3>
+            <p class="mb-6 text-pretty text-slate-600">
+                These Terms are governed by the laws of the jurisdiction in
+                which XeonTek is incorporated, without regard to conflict of law
+                rules.
+            </p>
+
+            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+                11. Contact
+            </h3>
+            <p class="mb-6 text-pretty text-slate-600">
+                If you have questions about these Terms, contact us at
+                legal@xeontek.com.
+            </p>
+
+            <p class="text-sm text-slate-500">Last updated: {{ date }}</p>
+        </section>
+    </section>
+</BaseLayout>
