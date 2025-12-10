@@ -3,8 +3,10 @@ import { defineConfig, envField } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 import vercel from '@astrojs/vercel';
-
+import keystatic from "@keystatic/astro";
 import react from '@astrojs/react';
+
+import db from '@astrojs/db';
 
 // https://astro.build/config
 export default defineConfig({
@@ -28,5 +30,5 @@ export default defineConfig({
 
   output: 'server',
   adapter: vercel(),
-  integrations: [react()]
+  integrations: [react(), ...(process.env.SKIP_KEYSTATIC ? [] : [keystatic()]), db()]
 });

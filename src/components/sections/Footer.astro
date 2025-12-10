@@ -26,6 +26,10 @@ const subscriptionText = "Newletter Subscription";
 const termsOfUseLink = "/terms";
 const termsOfUseText = "Terms of use";
 
+const path = Astro.url.pathname;
+
+console.log(path)
+
 // Trademark notice
 const trademarkNotice =
   "All trademarks, service marks, trade names, product names and logos appearing on this site are the property of their respective owners.";
@@ -35,34 +39,39 @@ const trademarkNotice =
   class="mt-auto w-full bg-linear-to-t/oklch from-teal-200 via-transparent to-white pb-10"
 >
   <div class="mx-auto mt-auto w-full max-w-[85rem] px-4 pb-10 sm:px-6 lg:px-8">
-    <hr class="mb-10 border-slate-200" />
+   
 
-    <div class="grid grid-cols-2 gap-6 md:grid-cols-5">
-      {/* Company Information */}
-      <div class="col-span-full self-center xl:col-span-2">
-        <span
-          class="flex-none text-xl font-semibold uppercase text-slate-700 focus:opacity-80 focus:outline-hidden"
-          aria-label="{companyName} Homepage"
-        >
-          {companyAbout}
-        </span>
-        <p class="mt-5 text-pretty text-slate-600 lg:w-5/12 xl:w-10/12">
-          {companyDescription}
-        </p>
-      </div>
+     
+      {path === '/' && (
+         <hr class="mb-10 border-slate-200" />
+          <div class="grid grid-cols-2 gap-6 md:grid-cols-5">
+            {/* Company Information */}
+            <div class="col-span-full self-center xl:col-span-2">
+              <span
+                class="flex-none text-xl font-semibold uppercase text-slate-700 focus:opacity-80 focus:outline-hidden"
+                aria-label="{companyName} Homepage"
+              >
+                {companyAbout}
+              </span>
+              <p class="mt-5 text-pretty text-slate-600 lg:w-5/12 xl:w-10/12">
+                {companyDescription}
+              </p>
+            </div>
 
-      {/* Contact Information Section */}
-     <div class="col-span-1 md:col-span-2 xl:col-span-1 xl:col-start-3">
-        <ContactInfo {...contactDetails} />
-      </div>
+            {/* Contact Information Section */}
+          <div class="col-span-1 md:col-span-2 xl:col-span-1 xl:col-start-3">
+              <ContactInfo {...contactDetails} />
+            </div>
+          
+            {/* Email Subscription Form */}
+            <div class="col-span-2 md:col-span-3 xl:col-span-2">
+              <h3 class="font-semibold text-slate-700">{subscriptionText}</h3>
+              <FooterForm />
+            </div>
+          </div>
+      )}
 
-      {/* Email Subscription Form */}
-      <div class="col-span-2 md:col-span-3 xl:col-span-2">
-        <h3 class="font-semibold text-slate-700">{subscriptionText}</h3>
-        <FooterForm />
-      </div>
-    </div>
-
+    
     {/* Divider before footer's bottom section */}
     <hr class="mb-5 mt-10 border-slate-200" />
 
