@@ -4,8 +4,9 @@ import ContactInfo from "@common/ContactInfo.astro";
 
 // Props for customization
 const companyName = "XeonTek";
+const companyAbout = "Quick fact";
 const companyDescription =
-  "We are a software company founded back in 2013 and operate primarily as an online-based business with our head office registered in London, UK.";
+  "We are a software engineering company whose main focus lies in building high performance web, mobile and AI apps targetted at B2B and B2C markets.";
 // Contact information for the company
 const contactDetails = {
   address: "27 Old Gloucester St",
@@ -43,7 +44,7 @@ const trademarkNotice =
           class="flex-none text-xl font-semibold uppercase text-slate-700 focus:opacity-80 focus:outline-hidden"
           aria-label="{companyName} Homepage"
         >
-          {companyName}
+          {companyAbout}
         </span>
         <p class="mt-5 text-pretty text-slate-600 lg:w-5/12 xl:w-10/12">
           {companyDescription}
