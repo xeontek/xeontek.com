@@ -1,5 +1,5 @@
 ---
-// import FooterForm from "@ui/forms/FooterForm.astro";
+import FooterForm from "@ui/forms/FooterForm.astro";
 import ContactInfo from "@common/ContactInfo.astro";
 
 // Props for customization
@@ -16,7 +16,14 @@ const contactDetails = {
 };
 
 // Dynamic date for copyright display
+
+const foundedYear = 2013;
 const copyrightYear = new Date().getFullYear();
+
+const subscriptionText = "Newletter Subscription";
+
+const termsOfUseLink = "/terms";
+const termsOfUseText = "Terms of use";
 
 // Trademark notice
 const trademarkNotice =
@@ -49,10 +56,10 @@ const trademarkNotice =
       </div>
 
       {/* Email Subscription Form */}
-      <!-- <div class="col-span-2 md:col-span-3 xl:col-span-2">
-        <h3 class="font-semibold text-slate-700">More information?</h3>
+      <div class="col-span-2 md:col-span-3 xl:col-span-2">
+        <h3 class="font-semibold text-slate-700">{subscriptionText}</h3>
         <FooterForm />
-      </div> -->
+      </div>
     </div>
 
     {/* Divider before footer's bottom section */}
@@ -63,9 +70,13 @@ const trademarkNotice =
     >
       {/* Copyright and Crafted By Section */}
       <p class="text-sm text-slate-400/50">
-        &copy; 2013-{copyrightYear}
-        {companyName}
-        </a>
+        &copy; {foundedYear}-{copyrightYear}
+        {companyName} &nbsp;
+        | &nbsp;
+        <a
+        href={termsOfUseLink}
+        rel="noopener noreferrer"
+        class="transition-colors duration-300 hover:text-slate-500">{termsOfUseText}</a>
       </p>
 
       {/* Trademark Notice */}
