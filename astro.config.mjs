@@ -6,8 +6,6 @@ import vercel from '@astrojs/vercel';
 import keystatic from "@keystatic/astro";
 import react from '@astrojs/react';
 
-import db from '@astrojs/db';
-
 // https://astro.build/config
 export default defineConfig({
   site: 'https://xeontek-web.vercel.app/',
@@ -30,5 +28,5 @@ export default defineConfig({
 
   output: 'server',
   adapter: vercel(),
-  integrations: [react(), ...(process.env.SKIP_KEYSTATIC ? [] : [keystatic()]), db()]
+  integrations: [react(), ...(process.env.SKIP_KEYSTATIC ? [] : [keystatic()])]
 });
