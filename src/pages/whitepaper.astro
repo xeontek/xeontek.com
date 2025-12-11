@@ -3,15 +3,43 @@ import BaseLayout from "@layout/BaseLayout.astro";
 import Icon from "@ui/icons/Icon.astro";
 import { getCollection } from "astro:content";
 
+import type { WithContext, Thing } from "schema-dts";
+
 const whitepapers = await getCollection("whitepapers");
 
 export const pageContent = {
   pageTitle: "Whitepapers",
   actionLabel: "Read more",
 };
+
+
+// SEO metadata for the page
+const seo = {
+  title: "Whitepaper - XeonTek",
+  description:
+    "Explore XeonTek's Whitepapers to gain insights into our AI-driven solutions and innovations in real estate, venture capital, and fintech industries.",
+};
+
+// Schema.org metadata for SEO
+const schema: WithContext<Thing> = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  inLanguage: "en-GB",
+  "@id": Astro.url.href,
+  url: Astro.url.href,
+  name: seo.title,
+  description: seo.description,
+  isPartOf: {
+    "@type": "WebSite",
+    url: `${Astro.site}`,
+    name: seo.title,
+    description: seo.description
+  },
+};
+
 ---
 
-<BaseLayout>
+<BaseLayout seo={seo} schema={schema}>
   <section class="mx-auto max-w-[85rem] px-4 pb-12 pt-48 sm:px-6 lg:px-8">
     <div class="max-w-7xl">
       <div class="mx-auto max-w-3xl lg:mx-0">

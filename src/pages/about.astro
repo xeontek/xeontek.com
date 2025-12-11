@@ -66,7 +66,7 @@ const threatDetection = ["SonarQube", "PenTest+"];
 const seo = {
   title: "About us - XeonTek",
   description:
-    "Learn more about XeonTek, a leading software company specializing in high-performance web and mobile applications since 2013.",
+    "Learn more about XeonTek, our mission, expertise, and commitment to security and compliance in delivering top-tier software solutions.",
 };
 
 // Schema.org metadata for SEO
@@ -76,15 +76,13 @@ const schema: WithContext<Thing> = {
   inLanguage: "en-GB",
   "@id": Astro.url.href,
   url: Astro.url.href,
-  name: "About XeonTek",
-  description:
-    "Discover XeonTek, a leading software company specializing in high-performance web and mobile applications since 2013.",
+  name: seo.title,
+  description: seo.description,
   isPartOf: {
     "@type": "WebSite",
     url: `${Astro.site}`,
-    name: "DataNova",
-    description:
-      "XeonTek is a leading software company specializing in high-performance web and mobile applications since 2013.",
+    name: seo.title,
+    description: seo.description
   },
 };
 ---

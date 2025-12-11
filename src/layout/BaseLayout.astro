@@ -3,11 +3,13 @@
 import Head from "@sections/Head.astro";
 import Navbar from "@sections/Navbar.astro";
 import Footer from "@sections/Footer.astro";
+
+const { seo } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en" class="scroll-pt-32">
-	<Head />
+	<Head seo={seo} />
 	<body class="bg-off-white selection:bg-teal-400 selection:text-slate-700">
 		<Navbar />
 		<main>

@@ -25,32 +25,29 @@ const careerBaseDetails = {
 // Content for the page title and subtitle
 const title = "Contact us";
 const subTitle = "Questions, Comments or Feedback.";
+const subject = Astro.url.searchParams.get("subject") ?? null;
 
 // SEO metadata for the page
 const seo = {
   title: "Contact us - XeonTek",
   description:
-    "Get in touch with XeonTek for inquiries, support, and feedback.",
+    "Get in touch with XeonTek for inquiries, support, or feedback. We're here to help you with our software solutions and services.",
 };
-
-const subject = Astro.url.searchParams.get("subject") ?? null;
 
 // Schema.org metadata for SEO
 const schema: WithContext<Thing> = {
   "@context": "https://schema.org",
-  "@type": "ContactPage",
+  "@type": "WebPage",
   inLanguage: "en-GB",
   "@id": Astro.url.href,
   url: Astro.url.href,
-  name: "Contact XeonTek",
-  description:
-    "Reach out to XeonTek for any questions, support, or business inquiries. Our team is ready to assist you.",
+  name: seo.title,
+  description: seo.description,
   isPartOf: {
     "@type": "WebSite",
     url: `${Astro.site}`,
-    name: "XeonTek",
-    description:
-      "XeonTek is a software company specializing in web and mobile applications.",
+    name: seo.title,
+    description: seo.description
   },
 };
 ---

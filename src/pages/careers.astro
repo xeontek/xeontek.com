@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@layout/BaseLayout.astro";
+import type { WithContext, Thing } from "schema-dts";
 import { getCollection } from "astro:content";
 
 const jobs = await getCollection("jobs");
@@ -7,18 +8,43 @@ const jobs = await getCollection("jobs");
 export const pageContent = {
     pageTitle: "Work with us",
     tableHeadings: {
-        name: "Vacancy",
+        name: "Role",
         details: "Description",
-        action: "Action",
+        action: "",
     },
     actionLabel: "Apply Now",
 };
 
 const subTitle =
     "We are always looking for talented individuals to join our team. If you are passionate about leveraging AI to transform real estate, venture capital, and fintech industries, we'd love to hear from you. Explore our current openings below and take the first step towards an exciting career with XeonTek.";
+
+
+// SEO metadata for the page
+const seo = {
+  title: "Careers - XeonTek",
+  description:
+    "Explore exciting career opportunities at XeonTek. Join our team of innovators and help shape the future of AI-driven solutions in real estate, venture capital, and fintech.",
+};
+
+// Schema.org metadata for SEO
+const schema: WithContext<Thing> = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  inLanguage: "en-GB",
+  "@id": Astro.url.href,
+  url: Astro.url.href,
+  name: seo.title,
+  description: seo.description,
+  isPartOf: {
+    "@type": "WebSite",
+    url: `${Astro.site}`,
+    name: seo.title,
+    description: seo.description
+  },
+};
 ---
 
-<BaseLayout>
+<BaseLayout seo={seo} schema={schema}>
     <section class="mx-auto max-w-[85rem] px-4 pt-48 pb-12 sm:px-6 lg:px-8">
         <div class="max-w-7xl">
             <div class="mx-auto max-w-3xl lg:mx-0">

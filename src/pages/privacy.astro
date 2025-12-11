@@ -1,12 +1,38 @@
 ---
 import BaseLayout from "@layout/BaseLayout.astro";
+import type { WithContext, Thing } from "schema-dts";
 
 const date = new Date().getDate().toString().padStart(2, "0") + "/" +
   (new Date().getMonth() + 1).toString().padStart(2, "0") + "/" +
   new Date().getFullYear();
+
+
+// SEO metadata for the page
+const seo = {
+  title: "Privacy Policy - XeonTek",
+  description:
+    "Read XeonTek's Privacy Policy to understand how we collect, use, and protect your personal information when you use our website and services.",
+};
+
+// Schema.org metadata for SEO
+const schema: WithContext<Thing> = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  inLanguage: "en-GB",
+  "@id": Astro.url.href,
+  url: Astro.url.href,
+  name: seo.title,
+  description: seo.description,
+  isPartOf: {
+    "@type": "WebSite",
+    url: `${Astro.site}`,
+    name: seo.title,
+    description: seo.description
+  },
+};
 ---
 
-<BaseLayout>
+<BaseLayout seo={seo} schema={schema}>
     <section
         class="bg-linear-to-b/oklch from-teal-200 via-transparent to-white"
     >

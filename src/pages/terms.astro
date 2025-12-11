@@ -1,12 +1,38 @@
 ---
 import BaseLayout from "@layout/BaseLayout.astro";
+import type { WithContext, Thing } from "schema-dts";
 
 const date = new Date().getDate().toString().padStart(2, "0") + "/" +
   (new Date().getMonth() + 1).toString().padStart(2, "0") + "/" +
   new Date().getFullYear();
+
+
+// SEO metadata for the page
+const seo = {
+  title: "Terms of use - XeonTek",
+  description:
+    "Read XeonTek's Terms of Use to understand the rules and guidelines for using our website and services.",
+};
+
+// Schema.org metadata for SEO
+const schema: WithContext<Thing> = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  inLanguage: "en-GB",
+  "@id": Astro.url.href,
+  url: Astro.url.href,
+  name: seo.title,
+  description: seo.description,
+  isPartOf: {
+    "@type": "WebSite",
+    url: `${Astro.site}`,
+    name: seo.title,
+    description: seo.description
+  },
+};
 ---
 
-<BaseLayout>
+<BaseLayout seo={seo} schema={schema}>
     <section
         class="bg-linear-to-b/oklch from-teal-200 via-transparent to-white"
     >
@@ -28,27 +54,27 @@ const date = new Date().getDate().toString().padStart(2, "0") + "/" +
                 do not use the site.
             </p>
 
-            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+            <h2 class="mt-6 mb-2 text-lg font-medium text-slate-700">
                 1. Use of the Site
-            </h3>
+            </h2>
             <p class="mb-4 text-pretty text-slate-600">
                 You may use the site for lawful purposes only. You agree not to
                 use the site in any way that violates applicable laws or
                 third-party rights.
             </p>
 
-            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+            <h2 class="mt-6 mb-2 text-lg font-medium text-slate-700">
                 2. Account Responsibility
-            </h3>
+            </h2>
             <p class="mb-4 text-pretty text-slate-600">
                 If you create an account, you are responsible for maintaining
                 the confidentiality of your credentials and for all activity
                 that occurs under your account.
             </p>
 
-            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+            <h2 class="mt-6 mb-2 text-lg font-medium text-slate-700">
                 3. Intellectual Property
-            </h3>
+            </h2>
             <p class="mb-4 text-pretty text-slate-600">
                 All content on this site, including text, graphics, logos, and
                 software, is the property of XeonTek or its licensors and is
@@ -57,9 +83,9 @@ const date = new Date().getDate().toString().padStart(2, "0") + "/" +
                 permission.
             </p>
 
-            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+            <h2 class="mt-6 mb-2 text-lg font-medium text-slate-700">
                 4. User Content
-            </h3>
+            </h2>
             <p class="mb-4 text-pretty text-slate-600">
                 By submitting content to the site, you grant XeonTek a
                 perpetual, royalty-free, worldwide license to use, reproduce,
@@ -68,7 +94,7 @@ const date = new Date().getDate().toString().padStart(2, "0") + "/" +
                 and that it does not infringe third-party rights.
             </p>
 
-            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+            <h2 class="mt-6 mb-2 text-lg font-medium text-slate-700">
                 5. Prohibited Conduct
             </h3>
             <ul class="mb-4 pl-5 text-pretty text-slate-600">
@@ -82,7 +108,7 @@ const date = new Date().getDate().toString().padStart(2, "0") + "/" +
                 </li>
             </ul>
 
-            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+            <h2 class="mt-6 mb-2 text-lg font-medium text-slate-700">
                 6. Disclaimers
             </h3>
             <p class="mb-4 text-pretty text-slate-600">
@@ -91,7 +117,7 @@ const date = new Date().getDate().toString().padStart(2, "0") + "/" +
                 express or implied, to the fullest extent permitted by law.
             </p>
 
-            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+            <h2 class="mt-6 mb-2 text-lg font-medium text-slate-700">
                 7. Limitation of Liability
             </h3>
             <p class="mb-4 text-pretty text-slate-600">
@@ -100,7 +126,7 @@ const date = new Date().getDate().toString().padStart(2, "0") + "/" +
                 punitive damages arising out of your use of the site.
             </p>
 
-            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+            <h2 class="mt-6 mb-2 text-lg font-medium text-slate-700">
                 8. Indemnification
             </h3>
             <p class="mb-4 text-pretty text-slate-600">
@@ -109,7 +135,7 @@ const date = new Date().getDate().toString().padStart(2, "0") + "/" +
                 violation of these Terms or your use of the site.
             </p>
 
-            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+            <h2 class="mt-6 mb-2 text-lg font-medium text-slate-700">
                 9. Termination
             </h3>
             <p class="mb-4 text-pretty text-slate-600">
@@ -118,7 +144,7 @@ const date = new Date().getDate().toString().padStart(2, "0") + "/" +
                 by their nature survive termination will continue to apply.
             </p>
 
-            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+            <h2 class="mt-6 mb-2 text-lg font-medium text-slate-700">
                 10. Governing Law
             </h3>
             <p class="mb-6 text-pretty text-slate-600">
@@ -127,7 +153,7 @@ const date = new Date().getDate().toString().padStart(2, "0") + "/" +
                 rules.
             </p>
 
-            <h3 class="mt-6 mb-2 text-lg font-medium text-slate-700">
+            <h2 class="mt-6 mb-2 text-lg font-medium text-slate-700">
                 11. Contact
             </h3>
             <p class="mb-6 text-pretty text-slate-600">

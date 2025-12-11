@@ -16,21 +16,23 @@ interface Props {
 const { seo, schema } = Astro.props;
 const socialImage = `${Astro.site}social.png`; // Path to the default social sharing image
 
+const defaultSEOTitle = "XeonTek: Home";
+const defaultSEODescription = "Our software works with millions of data points across B2B and B2C industries and derive AI-driven insights for our customers worldwide.";
+
+
 const defaultSchema: WithContext<Thing> = {
 	"@context": "https://schema.org",
 	"@type": "WebPage",
-	inLanguage: "en-US",
+	inLanguage: "en-GB",
 	"@id": Astro.url.href,
 	url: Astro.url.href,
-	name: "XeonTek",
-	description:
-		"XeonTek Ltd are experienced software consultants and blockchain enthusiasts delivering high performance digital apps on the cloud",
+	name: defaultSEOTitle,
+	description: defaultSEODescription,
 	isPartOf: {
 		"@type": "WebSite",
 		url: `${Astro.site}`,
-		name: "XeonTek",
-		description:
-			"XeonTek Ltd are experienced software consultants and blockchain enthusiasts delivering high performance digital apps on the cloud",
+		name: defaultSEOTitle,
+		description: defaultSEODescription
 	},
 };
 
@@ -40,27 +42,24 @@ const defaultSchema: WithContext<Thing> = {
 		{/* SEO Meta Tags */}
 		<SEO
 			charset="utf-8"
-			title={seo?.title ?? "XeonTek"}
-			description={seo?.description ??
-				"XeonTek Ltd are experienced software consultants and blockchain enthusiasts delivering high performance digital apps on the cloud"}
+			title={seo?.title ?? defaultSEOTitle}
+			description={seo?.description ?? defaultSEODescription}
 			openGraph={{
 				basic: {
-					title: "XeonTek - Software Consultancy & Blockchain Solutions",
+					title: seo?.title ?? defaultSEOTitle,
 					type: "website",
 					image: socialImage,
 				},
 				optional: {
-					description:
-						"Transform your Excel workspace with DataNova's powerful analytics suite. Get insights, predictive models, and visualizations in minutes with no coding required.",
+					description: seo?.description ?? defaultSEODescription,
 				},
 			}}
 			twitter={{
 				card: "summary_large_image",
-				title: "XeonTek",
-				description:
-					"XeonTek - Software Consultancy & Blockchain Solutions",
+				title: seo?.title ?? defaultSEOTitle,
+				description: seo?.description ?? defaultSEODescription,
 				image: socialImage,
-				imageAlt: "DataNova Logo.",
+				imageAlt: "XepnTek Logo.",
 			}}
 			extend={{
 				link: [
@@ -70,7 +69,6 @@ const defaultSchema: WithContext<Thing> = {
 				],
 				meta: [
 					{ name: "viewport", content: "width=device-width" },
-					{ name: "generator", content: `${Astro.generator}` },
 				],
 			}}
 		/>
