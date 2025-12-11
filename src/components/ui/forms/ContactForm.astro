@@ -2,12 +2,21 @@
 
 const apiKey = import.meta.env.WEB3FORM_API_KEY;
 
+
+const subject = Astro.props.subject || "General Inquiry";
+
+
 const formStrings = {
   name: "Name",
   email: "Email",
   message: "Message",
   submit: "Submit",
 };
+
+
+formStrings.message = `Regarding: ${subject}`;
+
+
 ---
 
 <form class="p-4" aria-labelledby="form-title" method="POST" action="https://api.web3forms.com/submit">

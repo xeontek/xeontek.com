@@ -6,7 +6,7 @@ const currentPath = Astro.url.pathname;
 
 // Call-to-action configuration for the primary button
 const aboutCTA = { text: "About us", href: "/about" };
-const homeCTA = { text: "Home", href: "/" };
+const careersCTA = { text: "Careers", href: "/careers" };
 const whitepaperCTA = { text: "Whitepaper", href: "/whitepaper" };
 const contactCTA = { text: "Contact us", href: "/contact" };
 ---
@@ -84,15 +84,7 @@ const contactCTA = { text: "Contact us", href: "/contact" };
             <div
               class="flex flex-col gap-0.5 xl:flex-row xl:items-center xl:justify-evenly xl:gap-1"
             >
-              <a
-                href={homeCTA.href}
-                class={`flex items-center rounded-lg p-2 font-medium text-slate-800 hover:bg-slate-100 focus:bg-slate-100 focus:outline-hidden ${
-                  currentPath === homeCTA.href ? "underline underline-offset-4" : ""
-                }`}
-                aria-current={currentPath === homeCTA.href ? "page" : undefined}
-              >
-                {homeCTA.text}
-              </a>
+            
               <a
                 href={aboutCTA.href}
                 class={`flex items-center rounded-lg p-2 font-medium text-slate-800 hover:bg-slate-100 focus:bg-slate-100 focus:outline-hidden ${
@@ -111,6 +103,16 @@ const contactCTA = { text: "Contact us", href: "/contact" };
               >
                 {whitepaperCTA.text} 
             </a>
+
+              <a
+                href={careersCTA.href}
+                class={`flex items-center rounded-lg p-2 font-medium text-slate-800 hover:bg-slate-100 focus:bg-slate-100 focus:outline-hidden ${
+                  currentPath === careersCTA.href ? "underline underline-offset-4" : ""
+                }`}
+                aria-current={currentPath === careersCTA.href ? "page" : undefined}
+              >
+                {careersCTA.text}
+              </a>
             </div>
           </div>
 

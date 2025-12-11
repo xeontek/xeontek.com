@@ -1,7 +1,9 @@
 ---
 import BaseLayout from "@layout/BaseLayout.astro";
 
-var date = new Date().toISOString().split('T')[0];
+const date = new Date().getDate().toString().padStart(2, "0") + "/" +
+  (new Date().getMonth() + 1).toString().padStart(2, "0") + "/" +
+  new Date().getFullYear();
 ---
 
 <BaseLayout>
@@ -133,7 +135,7 @@ var date = new Date().toISOString().split('T')[0];
                 legal@xeontek.com.
             </p>
 
-            <p class="text-sm text-slate-500">Last updated: {{ date }}</p>
+            <p class="text-sm text-slate-500">Last updated: {date}</p>
         </section>
     </section>
 </BaseLayout>

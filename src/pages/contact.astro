@@ -33,6 +33,8 @@ const seo = {
     "Get in touch with XeonTek for inquiries, support, and feedback.",
 };
 
+const subject = Astro.url.searchParams.get("subject") ?? null;
+
 // Schema.org metadata for SEO
 const schema: WithContext<Thing> = {
   "@context": "https://schema.org",
@@ -68,7 +70,7 @@ const schema: WithContext<Thing> = {
       <div
         class="mb-10 rounded-xl bg-teal-400 pb-10 md:order-2 md:mb-0 md:pb-0"
       >
-        <ContactForm />
+        <ContactForm subject={subject} />
       </div>
 
       <div class="space-y-14">
