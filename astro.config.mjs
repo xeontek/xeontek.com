@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 import vercel from '@astrojs/vercel';
 import keystatic from "@keystatic/astro";
 import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
@@ -28,5 +29,5 @@ export default defineConfig({
 
   output: 'server',
   adapter: vercel(),
-  integrations: [react(), ...(process.env.SKIP_KEYSTATIC ? [] : [keystatic()])]
+  integrations: [react(), ...(process.env.SKIP_KEYSTATIC ? [] : [keystatic()]), sitemap()]
 });
