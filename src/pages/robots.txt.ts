@@ -4,7 +4,8 @@ import type { APIRoute } from 'astro';
 // This specifies that all web crawlers (User-agent: *) have access to the entire site (Allow: /)
 const getRobotsTxt = () => `
 User-agent: *
-Allow: /
+Disallow: /docs/
+Sitemap: https://www.xeontek.com/sitemap-index.xml
 `;
 
 // API route for serving the robots.txt file
