@@ -9,7 +9,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://xeontek-web.vercel.app/',
+  site: 'https://xeontek-astro.vercel.app',
   prefetch: true,
   trailingSlash: 'never',
   
