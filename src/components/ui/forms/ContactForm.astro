@@ -100,3 +100,15 @@ formStrings.message = `Regarding: ${subject}`;
     </button>
   </div>
 </form>
+
+
+<script>
+    window.onload = function() {
+        // Reset the form fields when the page loads
+        var form = document.querySelector('form');
+
+        if (form) {
+            form.reset();
+        }
+    };
+</script>
