@@ -156,15 +156,15 @@ const schema: WithContext<Thing> = {
 
             if (instance) {
               instance.element.on("open", () =>
-                textareaAutoHeight(textarea, 3),
+                textareaAutoHeight(textarea, 10),
               );
             }
           } else {
-            textareaAutoHeight(textarea, 3);
+            textareaAutoHeight(textarea, 10);
           }
 
           textarea.addEventListener("input", () => {
-            textareaAutoHeight(textarea, 3);
+            textareaAutoHeight(textarea, 100);
           });
         });
       })();
