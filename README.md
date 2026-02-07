@@ -1,8 +1,21 @@
 
-Tested on Win 11 and Mise (Node 24.8.0)
+Requires Mise (Node 24.13.0)
 
+
+
+Create new astro project
 ```
 npm create astro@latest -- --ref astro@5.15.4
-npm run astro telemetry disable
 ```
 
+
+Install and running
+```
+npm install
+npm run dev
+```
+
+Disable telemetry
+```
+npm run astro telemetry disable
+```
