@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(rm:*)",
+      "Bash(npm run:*)",
+      "WebSearch",
+      "Bash(npx next:*)",
+      "WebFetch(domain:www.xeontek.com)",
+      "Bash(npm install:*)",
+      "Bash(curl:*)",
+      "Bash(node:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "context7"
+  ]
+}
