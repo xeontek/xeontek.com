@@ -1,18 +1,16 @@
 import type { Metadata } from "next";
-import { Instrument_Serif } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
-import { Analytics } from "@vercel/analytics/next";
-
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { CookieBanner } from "@/components/ui/cookie-banner";
+import { ConsentAnalytics } from "@/components/ui/consent-analytics";
 import "./globals.css";
 
-const instrumentSerif = Instrument_Serif({
-  weight: "400",
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-instrument-serif",
+  variable: "--font-space-grotesk",
   display: "swap",
 });
 
@@ -54,14 +52,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${instrumentSerif.variable} ${GeistSans.variable} ${GeistMono.variable}`}
+      className={`${spaceGrotesk.variable} ${GeistSans.variable} ${GeistMono.variable}`}
     >
       <body className="bg-white selection:bg-teal-200 selection:text-slate-900">
         <Navbar />
         <main>{children}</main>
         <Footer />
         <CookieBanner />
-        <Analytics />
+        <ConsentAnalytics />
       </body>
     </html>
   );

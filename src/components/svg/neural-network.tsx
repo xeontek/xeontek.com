@@ -7,79 +7,62 @@ export function NeuralNetworkGraphic({ className }: { className?: string }) {
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      {/* Input layer */}
-      {[60, 100, 140, 180].map((y) => (
-        <circle key={`i-${y}`} cx="60" cy={y} r="8" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+      {/* Globe */}
+      <circle cx="160" cy="115" r="70" stroke="currentColor" strokeWidth="1.5" opacity="0.3" />
+
+      {/* Latitude lines */}
+      <ellipse cx="160" cy="85" rx="62" ry="12" stroke="currentColor" strokeWidth="0.8" opacity="0.15" />
+      <ellipse cx="160" cy="115" rx="70" ry="14" stroke="currentColor" strokeWidth="0.8" opacity="0.15" />
+      <ellipse cx="160" cy="145" rx="62" ry="12" stroke="currentColor" strokeWidth="0.8" opacity="0.15" />
+
+      {/* Longitude lines */}
+      <ellipse cx="160" cy="115" rx="25" ry="70" stroke="currentColor" strokeWidth="0.8" opacity="0.15" />
+      <ellipse cx="160" cy="115" rx="50" ry="70" stroke="currentColor" strokeWidth="0.8" opacity="0.15" />
+
+      {/* Data pins — emerging market regions */}
+      {[
+        { x: 130, y: 80, r: 4, op: 0.5 },
+        { x: 185, y: 90, r: 5, op: 0.6 },
+        { x: 145, y: 120, r: 4, op: 0.45 },
+        { x: 195, y: 115, r: 3, op: 0.4 },
+        { x: 170, y: 140, r: 5, op: 0.55 },
+        { x: 120, y: 105, r: 3, op: 0.35 },
+        { x: 205, y: 135, r: 4, op: 0.5 },
+      ].map(({ x, y, r, op }, i) => (
+        <g key={`pin-${i}`}>
+          <circle cx={x} cy={y} r={r} fill="currentColor" opacity={op} />
+          <circle cx={x} cy={y} r={r + 4} stroke="currentColor" strokeWidth="0.8" opacity={op * 0.5} />
+        </g>
       ))}
 
-      {/* Hidden layer 1 */}
-      {[50, 90, 130, 170, 190].map((y) => (
-        <circle key={`h1-${y}`} cx="140" cy={y} r="7" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
+      {/* Connection lines between pins */}
+      {[
+        [130, 80, 185, 90],
+        [185, 90, 195, 115],
+        [145, 120, 170, 140],
+        [130, 80, 145, 120],
+        [195, 115, 205, 135],
+        [170, 140, 205, 135],
+        [120, 105, 145, 120],
+      ].map(([x1, y1, x2, y2], i) => (
+        <line
+          key={`conn-${i}`}
+          x1={x1} y1={y1} x2={x2} y2={y2}
+          stroke="currentColor"
+          strokeWidth="0.8"
+          opacity="0.12"
+          strokeDasharray="3 3"
+        />
       ))}
 
-      {/* Hidden layer 2 */}
-      {[70, 110, 150, 180].map((y) => (
-        <circle key={`h2-${y}`} cx="210" cy={y} r="6" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
-      ))}
+      {/* Highlighted pulse ring on a key pin */}
+      <circle cx="185" cy="90" r="12" stroke="currentColor" strokeWidth="1" opacity="0.15" />
+      <circle cx="170" cy="140" r="12" stroke="currentColor" strokeWidth="1" opacity="0.15" />
 
-      {/* Output layer */}
-      {[90, 130, 160].map((y) => (
-        <circle key={`o-${y}`} cx="270" cy={y} r="8" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
-      ))}
-
-      {/* Connections - input to hidden 1 */}
-      {[60, 100, 140, 180].map((iy) =>
-        [50, 90, 130, 170, 190].map((hy) => (
-          <line
-            key={`c1-${iy}-${hy}`}
-            x1="68" y1={iy} x2="133" y2={hy}
-            stroke="currentColor" strokeWidth="0.5" opacity="0.12"
-          />
-        )),
-      )}
-
-      {/* Connections - hidden 1 to hidden 2 */}
-      {[50, 90, 130, 170, 190].map((h1y) =>
-        [70, 110, 150, 180].map((h2y) => (
-          <line
-            key={`c2-${h1y}-${h2y}`}
-            x1="147" y1={h1y} x2="204" y2={h2y}
-            stroke="currentColor" strokeWidth="0.5" opacity="0.12"
-          />
-        )),
-      )}
-
-      {/* Connections - hidden 2 to output */}
-      {[70, 110, 150, 180].map((h2y) =>
-        [90, 130, 160].map((oy) => (
-          <line
-            key={`c3-${h2y}-${oy}`}
-            x1="216" y1={h2y} x2="262" y2={oy}
-            stroke="currentColor" strokeWidth="0.5" opacity="0.12"
-          />
-        )),
-      )}
-
-      {/* Highlighted path */}
-      <path
-        d="M68 100 L133 90 L147 90 L204 110 L216 110 L262 130"
-        stroke="currentColor"
-        strokeWidth="2"
-        opacity="0.35"
-        strokeLinecap="round"
-        fill="none"
-      />
-
-      {/* Activated nodes on path */}
-      <circle cx="60" cy="100" r="8" fill="currentColor" opacity="0.15" />
-      <circle cx="140" cy="90" r="7" fill="currentColor" opacity="0.12" />
-      <circle cx="210" cy="110" r="6" fill="currentColor" opacity="0.12" />
-      <circle cx="270" cy="130" r="8" fill="currentColor" opacity="0.15" />
-
-      {/* Labels */}
-      <text x="60" y="210" textAnchor="middle" fill="currentColor" opacity="0.4" fontSize="8" fontFamily="var(--font-body)">Input</text>
-      <text x="175" y="220" textAnchor="middle" fill="currentColor" opacity="0.4" fontSize="8" fontFamily="var(--font-body)">Hidden Layers</text>
-      <text x="270" y="210" textAnchor="middle" fill="currentColor" opacity="0.4" fontSize="8" fontFamily="var(--font-body)">Output</text>
+      {/* Label */}
+      <text x="160" y="210" textAnchor="middle" fill="currentColor" opacity="0.4" fontSize="8" fontFamily="var(--font-body)">
+        Emerging Markets
+      </text>
     </svg>
   );
 }

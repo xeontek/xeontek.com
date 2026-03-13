@@ -4,6 +4,9 @@ import {
   Buildings,
   ChartLine,
   Brain,
+  Globe,
+  MagnifyingGlass,
+  Handshake,
 } from "@phosphor-icons/react/dist/ssr";
 import { getWhitepapers } from "@/lib/content";
 import { HeroGrid } from "@/components/svg/hero-grid";
@@ -15,26 +18,27 @@ import { FadeIn } from "@/components/motion/fade-in";
 import { StaggerChildren, StaggerItem } from "@/components/motion/stagger-children";
 import { FloatingStack } from "@/components/ui/floating-stack";
 
+
 const focusAreas = [
   {
     icon: Buildings,
-    title: "Property Analytics",
+    title: "Property Platforms",
     description:
-      "Platforms that process property market data — valuations, yields, transaction histories, and market indicators — into structured, queryable systems that surface patterns manual analysis misses.",
+      "Platforms that aggregate real estate market data and connect investors, buyers, and tenants with property providers — making fragmented markets searchable and accessible.",
     graphic: DataFlowGraphic,
   },
   {
     icon: Brain,
-    title: "Investment Intelligence",
+    title: "Emerging Market Intelligence",
     description:
-      "Models for investment risk assessment, portfolio analysis, and market forecasting. Designed for explainability — every prediction is traceable to the data and logic behind it.",
+      "Data platforms that track and analyse emerging markets — using our own AI models to surface opportunities, risks, and trends across regions where reliable information is hardest to find.",
     graphic: NeuralNetworkGraphic,
   },
   {
     icon: ChartLine,
-    title: "Financial Modelling",
+    title: "Deal Flow & Capital Intelligence",
     description:
-      "Tools that handle multi-variable projections, sensitivity analysis, and Monte Carlo simulations — presented through clear, interactive interfaces.",
+      "Platforms for angel investors, VCs, and investment networks — deal tracking, portfolio oversight, and data-driven matching between founders and capital.",
     graphic: ChartGraphic,
   },
 ];
@@ -51,19 +55,19 @@ export default function HomePage() {
           <HeroStagger className="max-w-3xl">
             <HeroItem>
               <p className="text-sm font-medium tracking-wider text-teal-700 uppercase">
-                Est. 2013 &mdash; London
+                Technology, engineered in-house
               </p>
             </HeroItem>
             <HeroItem>
               <h1 className="mt-4 text-slate-800">
-                We build software that makes sense of financial data.
+                Platforms engineered for clarity in complex markets.
               </h1>
             </HeroItem>
             <HeroItem>
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
                 XeonTek is a self-funded technology company. We design, engineer,
-                and operate our own AI-driven platforms for property analytics,
-                investment intelligence, and financial modelling.
+                and operate our own platforms for property, emerging markets,
+                and capital networks — backed by our own applied AI research.
               </p>
             </HeroItem>
             <HeroItem>
@@ -95,7 +99,7 @@ export default function HomePage() {
               <p className="text-sm font-medium tracking-wider text-teal-700 uppercase">
                 What we build
               </p>
-              <h2 className="mt-3">Three domains, one focus: financial intelligence</h2>
+              <h2 className="mt-3">Three domains, one focus: making complex data useful</h2>
             </div>
           </FadeIn>
 
@@ -103,12 +107,12 @@ export default function HomePage() {
             {focusAreas.map(({ icon: Icon, title, description, graphic: Graphic }, i) => (
               <FadeIn key={title} delay={i * 0.1} distance={32}>
                 <div
-                  className={`group overflow-hidden rounded-2xl border border-slate-200 transition-all duration-300 hover:border-teal-200 hover:shadow-lg ${
-                    i % 2 === 0 ? "bg-white" : "bg-slate-50"
-                  }`}
+                  className="group overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:border-teal-200 hover:shadow-lg"
                 >
                   <div className="grid grid-cols-1 lg:grid-cols-2">
-                    <div className="flex flex-col justify-center p-8 sm:p-10 lg:p-12">
+                    <div className={`flex flex-col justify-center p-8 sm:p-10 lg:p-12 ${
+                      i === 1 ? "lg:order-2" : ""
+                    }`}>
                       <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-50 text-teal-700">
                         <Icon size={22} weight="regular" />
                       </div>
@@ -117,9 +121,9 @@ export default function HomePage() {
                         {description}
                       </p>
                     </div>
-                    <div className={`flex items-center justify-center p-8 ${
-                      i % 2 === 0 ? "bg-slate-50" : "bg-white"
-                    } lg:p-12`}>
+                    <div className={`flex items-center justify-center bg-slate-50 p-8 lg:p-12 ${
+                      i === 1 ? "lg:order-1" : ""
+                    }`}>
                       <Graphic className="w-full max-w-xs text-teal-700" />
                     </div>
                   </div>
@@ -130,20 +134,80 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Technology — soft slate section with marquee */}
+      {/* What we do — services overview */}
+      <section className="bg-white py-20 sm:py-28">
+        <div className="mx-auto max-w-6xl px-6">
+          <FadeIn>
+            <div className="max-w-xl">
+              <p className="text-sm font-medium tracking-wider text-teal-700 uppercase">
+                What we do
+              </p>
+              <h2 className="mt-3">How we deliver</h2>
+              <p className="mt-4 leading-relaxed text-slate-500">
+                Each platform we build serves a specific market. These are the
+                capabilities that run through all of them.
+              </p>
+            </div>
+          </FadeIn>
+
+          <StaggerChildren className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-3" stagger={0.1}>
+            <StaggerItem>
+              <div className="h-full rounded-xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:border-teal-200 hover:shadow-md sm:p-8">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-50 text-teal-700">
+                  <Globe size={22} />
+                </div>
+                <h3 className="mt-5 text-lg">Market Aggregation</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                  We pull together fragmented data from multiple sources —
+                  property listings, market feeds, public records — into
+                  unified, searchable platforms.
+                </p>
+              </div>
+            </StaggerItem>
+            <StaggerItem>
+              <div className="h-full rounded-xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:border-teal-200 hover:shadow-md sm:p-8">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-50 text-teal-700">
+                  <MagnifyingGlass size={22} />
+                </div>
+                <h3 className="mt-5 text-lg">Research &amp; Intelligence</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                  Structured analysis of emerging markets where reliable data
+                  is scarce. We surface trends, risks, and opportunities that
+                  inform real decisions.
+                </p>
+              </div>
+            </StaggerItem>
+            <StaggerItem>
+              <div className="h-full rounded-xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:border-teal-200 hover:shadow-md sm:p-8">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-50 text-teal-700">
+                  <Handshake size={22} />
+                </div>
+                <h3 className="mt-5 text-lg">Network &amp; Matching</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                  Connecting the right people — investors to founders, buyers
+                  to providers — through intelligent matching and deal flow
+                  tools.
+                </p>
+              </div>
+            </StaggerItem>
+          </StaggerChildren>
+        </div>
+      </section>
+
+      {/* Engineering principles — marquee */}
       <section className="bg-gradient-to-b from-slate-100 via-slate-50 to-white py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-6">
           <FadeIn className="text-center">
             <p className="text-sm font-medium tracking-wider text-teal-700 uppercase">
-              Our stack
+              What drives our engineering
             </p>
             <h2 className="mt-3">
-              Built on technologies we trust
+              Principles, not shortcuts
             </h2>
             <p className="mx-auto mt-4 max-w-xl leading-relaxed text-slate-500">
-              We work primarily in Python and TypeScript. Our stack reflects
-              what we&apos;ve found to be reliable and maintainable at our
-              scale — tools chosen for long-term viability, not hype.
+              Being self-funded means we answer to the work, not to a board.
+              That changes how we build — including our investment in applied
+              AI research that feeds directly into our products.
             </p>
           </FadeIn>
           <div className="mt-14">
@@ -164,8 +228,8 @@ export default function HomePage() {
                   </p>
                   <h2 className="mt-3">Ideas we&apos;re exploring</h2>
                   <p className="mt-3 max-w-lg text-slate-500">
-                    We publish our thinking on AI applications in finance and real
-                    estate. These papers reflect the problems we&apos;re actively
+                    We publish our thinking on technology, data, and the industries
+                    we work in. These papers reflect the problems we&apos;re actively
                     working on.
                   </p>
                 </div>
@@ -212,7 +276,7 @@ export default function HomePage() {
           <h2 className="text-2xl sm:text-3xl">Have a question?</h2>
           <p className="mt-3 text-slate-500">
             We&apos;re always open to conversations about technology, data, and
-            financial systems.
+            what we&apos;re building.
           </p>
           <Link
             href="/contact"

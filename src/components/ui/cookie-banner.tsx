@@ -47,9 +47,9 @@ export function CookieBanner() {
       <div className="mx-auto max-w-2xl rounded-xl border border-slate-200 bg-white p-4 shadow-lg sm:flex sm:items-center sm:gap-4 sm:p-5">
         <div className="flex-1">
           <p className="text-sm text-slate-600">
-            We use cookies to analyse site traffic and improve your experience.
-            By continuing to use this site, you consent to our use of cookies.
-            See our{" "}
+            We use analytics to understand how visitors use our site. Click
+            &quot;Accept&quot; to enable analytics, or dismiss to browse
+            without tracking. See our{" "}
             <Link
               href="/privacy"
               className="font-medium text-teal-800 underline underline-offset-2 hover:text-teal-700"

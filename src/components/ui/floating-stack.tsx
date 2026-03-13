@@ -2,17 +2,17 @@
 
 const rows = [
   {
-    items: ["Python", "TypeScript", "SQL", "FastAPI", "Node.js", "PostgreSQL"],
+    items: ["No black boxes", "Explainable models", "Traceable predictions", "Data-first design", "Test everything"],
     duration: "30s",
     direction: "normal",
   },
   {
-    items: ["PyTorch", "scikit-learn", "pandas", "dbt", "Kafka", "Redis"],
+    items: ["Own what we ship", "No handoffs", "Monitor in production", "Self-funded rigour", "Correctness over speed"],
     duration: "40s",
     direction: "reverse",
   },
   {
-    items: ["Cloudflare", "SonarQube", "OAuth 2.0", "Docker", "Terraform"],
+    items: ["Long-term bets", "Ten-year architectures", "Depth over breadth", "Build to last", "No hype-driven decisions"],
     duration: "25s",
     direction: "normal",
   },

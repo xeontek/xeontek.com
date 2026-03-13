@@ -7,48 +7,80 @@ export function DataFlowGraphic({ className }: { className?: string }) {
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      {/* Database cylinders */}
-      <ellipse cx="60" cy="50" rx="28" ry="10" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
-      <path d="M32 50 V80" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
-      <path d="M88 50 V80" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
-      <ellipse cx="60" cy="80" rx="28" ry="10" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
+      {/* People icons (left side) */}
+      {[60, 120, 180].map((y) => (
+        <g key={`person-${y}`}>
+          <circle cx="50" cy={y - 12} r="8" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+          <path d={`M36 ${y + 8} Q50 ${y - 2} 64 ${y + 8}`} stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
+        </g>
+      ))}
 
-      {/* Flow arrows */}
-      <path d="M90 65 L130 100" stroke="currentColor" strokeWidth="1.5" opacity="0.4" strokeDasharray="4 3" />
-      <path d="M90 65 L130 55" stroke="currentColor" strokeWidth="1.5" opacity="0.4" strokeDasharray="4 3" />
+      {/* Connection lines — people to central platform */}
+      {[60, 120, 180].map((y) => (
+        <path
+          key={`link-left-${y}`}
+          d={`M66 ${y} L130 120`}
+          stroke="currentColor"
+          strokeWidth="1"
+          opacity="0.15"
+          strokeDasharray="4 3"
+        />
+      ))}
 
-      {/* Processing node */}
-      <rect x="130" y="85" width="60" height="35" rx="6" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
-      <path d="M145 97 L150 107 L175 97" stroke="currentColor" strokeWidth="1.2" opacity="0.4" />
+      {/* Central platform node */}
+      <rect x="130" y="95" width="60" height="50" rx="8" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
+      <rect x="140" y="105" width="40" height="4" rx="2" fill="currentColor" opacity="0.15" />
+      <rect x="140" y="114" width="28" height="4" rx="2" fill="currentColor" opacity="0.1" />
+      <rect x="140" y="123" width="34" height="4" rx="2" fill="currentColor" opacity="0.12" />
 
-      {/* Analysis node */}
-      <rect x="130" y="38" width="60" height="35" rx="6" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
-      <circle cx="160" cy="55" r="8" stroke="currentColor" strokeWidth="1" opacity="0.3" />
-      <path d="M155 55 L160 50 L165 58" stroke="currentColor" strokeWidth="1.2" opacity="0.5" />
+      {/* Connection lines — platform to buildings */}
+      {[55, 120, 185].map((y) => (
+        <path
+          key={`link-right-${y}`}
+          d={`M190 120 L240 ${y}`}
+          stroke="currentColor"
+          strokeWidth="1"
+          opacity="0.15"
+          strokeDasharray="4 3"
+        />
+      ))}
 
-      {/* Output arrows */}
-      <path d="M190 55 L220 80" stroke="currentColor" strokeWidth="1.5" opacity="0.4" strokeDasharray="4 3" />
-      <path d="M190 102 L220 90" stroke="currentColor" strokeWidth="1.5" opacity="0.4" strokeDasharray="4 3" />
+      {/* Building icons (right side) */}
+      {[
+        { x: 252, y: 35, w: 24, h: 40 },
+        { x: 248, y: 100, w: 32, h: 44 },
+        { x: 252, y: 168, w: 24, h: 36 },
+      ].map(({ x, y, w, h }, i) => (
+        <g key={`building-${i}`}>
+          <rect x={x} y={y} width={w} height={h} rx="2" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+          {/* Windows */}
+          {[0, 1, 2].map((row) => (
+            <g key={`win-${i}-${row}`}>
+              <rect x={x + 4} y={y + 5 + row * 10} width={4} height={4} rx="0.5" fill="currentColor" opacity="0.15" />
+              <rect x={x + w - 8} y={y + 5 + row * 10} width={4} height={4} rx="0.5" fill="currentColor" opacity="0.15" />
+            </g>
+          ))}
+        </g>
+      ))}
 
-      {/* Dashboard output */}
-      <rect x="220" y="65" width="70" height="50" rx="6" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
-      {/* Mini chart bars */}
-      <rect x="232" y="95" width="8" height="12" rx="1" fill="currentColor" opacity="0.2" />
-      <rect x="244" y="88" width="8" height="19" rx="1" fill="currentColor" opacity="0.3" />
-      <rect x="256" y="82" width="8" height="25" rx="1" fill="currentColor" opacity="0.25" />
-      <rect x="268" y="78" width="8" height="29" rx="1" fill="currentColor" opacity="0.35" />
-      {/* Chart line */}
-      <path d="M236 90 L248 83 L260 86 L272 75" stroke="currentColor" strokeWidth="1.5" opacity="0.5" strokeLinecap="round" />
+      {/* Highlighted active connection */}
+      <path
+        d="M66 120 L130 120 M190 120 L240 120"
+        stroke="currentColor"
+        strokeWidth="2"
+        opacity="0.3"
+        strokeLinecap="round"
+      />
 
       {/* Labels */}
-      <text x="60" y="110" textAnchor="middle" fill="currentColor" opacity="0.4" fontSize="8" fontFamily="var(--font-body)">
-        Data Sources
+      <text x="50" y="218" textAnchor="middle" fill="currentColor" opacity="0.4" fontSize="8" fontFamily="var(--font-body)">
+        Investors &amp; Buyers
       </text>
-      <text x="160" y="140" textAnchor="middle" fill="currentColor" opacity="0.4" fontSize="8" fontFamily="var(--font-body)">
-        Processing
+      <text x="160" y="165" textAnchor="middle" fill="currentColor" opacity="0.4" fontSize="8" fontFamily="var(--font-body)">
+        Platform
       </text>
-      <text x="255" y="135" textAnchor="middle" fill="currentColor" opacity="0.4" fontSize="8" fontFamily="var(--font-body)">
-        Insights
+      <text x="264" y="218" textAnchor="middle" fill="currentColor" opacity="0.4" fontSize="8" fontFamily="var(--font-body)">
+        Providers
       </text>
     </svg>
   );
