@@ -26,7 +26,7 @@ export function Footer() {
               <span className="font-semibold text-teal-700">Xeon</span>Tek
             </p>
             <p className="mt-2 text-sm text-slate-500">
-              Financial technology, London.
+              Driving technology forward.
             </p>
             <a
               href="https://www.linkedin.com/company/xeontek"
