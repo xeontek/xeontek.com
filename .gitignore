@@ -24,3 +24,4 @@ pnpm-debug.log*
 
 # next.js
 next-env.d.ts
+tsconfig.tsbuildinfo

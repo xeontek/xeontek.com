@@ -1,28 +1,29 @@
 import type { Metadata } from "next";
-import { Space_Grotesk } from "next/font/google";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-import { CookieBanner } from "@/components/ui/cookie-banner";
-import { ConsentAnalytics } from "@/components/ui/consent-analytics";
+import {
+  defaultDescription,
+  defaultTitle,
+  SiteStructuredData,
+} from "@/lib/seo";
 import "./globals.css";
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space-grotesk",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.xeontek.com"),
   title: {
-    default: "XeonTek — Financial Technology, London",
+    default: defaultTitle,
     template: "%s — XeonTek",
   },
-  description:
-    "XeonTek is a London-based technology company building AI-driven platforms for property analytics, investment intelligence, and financial modelling.",
+  description: defaultDescription,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
+    title: defaultTitle,
+    description: defaultDescription,
+    url: "https://www.xeontek.com/",
     type: "website",
     locale: "en_GB",
     siteName: "XeonTek",
@@ -50,16 +51,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${spaceGrotesk.variable} ${GeistSans.variable} ${GeistMono.variable}`}
-    >
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <body className="bg-white selection:bg-teal-200 selection:text-slate-900">
         <Navbar />
         <main>{children}</main>
         <Footer />
-        <CookieBanner />
-        <ConsentAnalytics />
+        <SiteStructuredData />
       </body>
     </html>
   );

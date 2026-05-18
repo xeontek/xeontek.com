@@ -1,28 +1,44 @@
 "use client";
 
-import { useRef, useState } from "react";
-import HCaptcha from "@hcaptcha/react-hcaptcha";
+import Script from "next/script";
+import Link from "next/link";
+import { FormEvent, useEffect, useState } from "react";
 import { contactFormSchema, type FormState } from "@/lib/schemas";
 
-interface ContactFormProps {
-  subject?: string | null;
+declare global {
+  interface Window {
+    turnstile?: {
+      reset: () => void;
+    };
+  }
 }
 
-export function ContactForm({ subject }: ContactFormProps) {
+const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
+export function ContactForm() {
   const [state, setState] = useState<FormState>({ success: false });
   const [pending, setPending] = useState(false);
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const captchaRef = useRef<HCaptcha>(null);
+  const [subject, setSubject] = useState<string | null>(null);
 
-  async function handleSubmit(formData: FormData) {
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setSubject(params.get("subject"));
+  }, []);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
     setPending(true);
     setState({ success: false });
 
-    if (!captchaToken) {
+    const formData = new FormData(event.currentTarget);
+    const turnstileToken = formData.get("cf-turnstile-response");
+
+    if (!turnstileToken) {
       setPending(false);
       setState({
         success: false,
-        message: "Please complete the captcha.",
+        message: "Please complete the verification.",
       });
       return;
     }
@@ -46,27 +62,26 @@ export function ContactForm({ subject }: ContactFormProps) {
     }
 
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          access_key: process.env.NEXT_PUBLIC_WEB3FORM_API_KEY,
           name: parsed.data.name,
           email: parsed.data.email,
           subject: parsed.data.subject ?? "New enquiry from xeontek.com",
           message: parsed.data.message,
-          "h-captcha-response": captchaToken,
+          turnstileToken,
         }),
       });
 
       const result = await response.json();
 
-      if (result.success) {
+      if (response.ok && result.success) {
         setState({ success: true });
       } else {
         setState({
           success: false,
-          message: "Something went wrong. Please try again.",
+          message: result.message ?? "Something went wrong. Please try again.",
         });
       }
     } catch {
@@ -76,8 +91,7 @@ export function ContactForm({ subject }: ContactFormProps) {
       });
     } finally {
       setPending(false);
-      captchaRef.current?.resetCaptcha();
-      setCaptchaToken(null);
+      window.turnstile?.reset();
     }
   }
 
@@ -92,7 +106,7 @@ export function ContactForm({ subject }: ContactFormProps) {
   }
 
   return (
-    <form action={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-5">
       {subject && <input type="hidden" name="subject" value={subject} />}
 
       <div>
@@ -151,26 +165,42 @@ export function ContactForm({ subject }: ContactFormProps) {
           placeholder="How can we help?"
         />
         {state.errors?.message && (
-          <p className="mt-1 text-xs text-red-600">
-            {state.errors.message[0]}
-          </p>
+          <p className="mt-1 text-xs text-red-600">{state.errors.message[0]}</p>
         )}
       </div>
 
-      <HCaptcha
-        sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"
-        reCaptchaCompat={false}
-        ref={captchaRef}
-        onVerify={setCaptchaToken}
-      />
-
-      {state.message && (
-        <p className="text-sm text-red-600">{state.message}</p>
+      {turnstileSiteKey ? (
+        <>
+          <Script
+            src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+            async
+            defer
+          />
+          <div className="cf-turnstile" data-sitekey={turnstileSiteKey} />
+        </>
+      ) : (
+        <p className="text-sm text-red-600">
+          Contact form verification is not configured.
+        </p>
       )}
+
+      {state.message && <p className="text-sm text-red-600">{state.message}</p>}
+
+      <p className="text-xs leading-relaxed text-slate-500">
+        We use the details you provide to respond to your enquiry, including
+        recruitment or application enquiries. See our{" "}
+        <Link
+          href="/privacy"
+          className="font-medium text-teal-800 underline underline-offset-2 hover:text-teal-700"
+        >
+          Privacy Policy
+        </Link>
+        .
+      </p>
 
       <button
         type="submit"
-        disabled={pending}
+        disabled={pending || !turnstileSiteKey}
         className="inline-flex w-full items-center justify-center rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-medium text-white transition-colors duration-150 hover:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
       >
         {pending ? "Sending..." : "Send message"}

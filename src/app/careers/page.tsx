@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { getJobs } from "@/lib/content";
 import { HeroStagger, HeroItem } from "@/components/motion/hero-entrance";
 import { FadeIn } from "@/components/motion/fade-in";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Careers",
   description:
     "Career opportunities at XeonTek. We're building AI-driven financial platforms in London.",
-};
+  path: "/careers",
+});
 
 export default function CareersPage() {
   const jobs = getJobs();
@@ -30,9 +31,9 @@ export default function CareersPage() {
             </HeroItem>
             <HeroItem>
               <p className="mt-4 max-w-2xl text-lg text-slate-500">
-                We&apos;re a small, self-funded team building AI-driven financial
-                platforms. We work remotely, move deliberately, and value people who
-                care about the quality of what they build.
+                We&apos;re a small, self-funded team building AI-driven
+                financial platforms. We work remotely, move deliberately, and
+                value people who care about the quality of what they build.
               </p>
             </HeroItem>
           </HeroStagger>
@@ -70,8 +71,8 @@ export default function CareersPage() {
                   We don&apos;t have open positions at the moment.
                 </p>
                 <p className="mt-2 text-sm text-slate-500">
-                  If you&apos;re interested in future opportunities, connect with
-                  us on{" "}
+                  If you&apos;re interested in future opportunities, connect
+                  with us on{" "}
                   <a
                     href="https://www.linkedin.com/company/xeontek"
                     target="_blank"

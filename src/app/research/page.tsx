@@ -1,20 +1,46 @@
-import type { Metadata } from "next";
-import { ArrowUpRight, DownloadSimple, BookOpenText } from "@phosphor-icons/react/dist/ssr";
+import Link from "next/link";
+import {
+  ArrowUpRight,
+  DownloadSimple,
+  BookOpenText,
+} from "@phosphor-icons/react/dist/ssr";
 import { getWhitepapers } from "@/lib/content";
 import { HeroStagger, HeroItem } from "@/components/motion/hero-entrance";
 import { FadeIn } from "@/components/motion/fade-in";
+import { absoluteUrl, pageMetadata, siteUrl } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Research",
   description:
     "Papers and technical writing from the XeonTek team on AI applications in finance and real estate.",
-};
+  path: "/research",
+});
 
 export default function ResearchPage() {
   const whitepapers = getWhitepapers();
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Research — XeonTek",
+    url: `${siteUrl}/research`,
+    hasPart: whitepapers.map((wp) => ({
+      "@type": "CreativeWork",
+      name: wp.title,
+      description: wp.description,
+      datePublished: wp.publishedDate,
+      url: wp.readLink ? absoluteUrl(wp.readLink) : `${siteUrl}/research`,
+      publisher: {
+        "@id": `${siteUrl}/#organization`,
+      },
+    })),
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       {/* Hero */}
       <section className="bg-gradient-to-b from-teal-50 to-white">
         <div className="mx-auto max-w-5xl px-6 pt-28 pb-16 sm:pt-36 sm:pb-20">
@@ -25,9 +51,7 @@ export default function ResearchPage() {
               </p>
             </HeroItem>
             <HeroItem>
-              <h1 className="mt-3 max-w-3xl">
-                Papers and technical writing
-              </h1>
+              <h1 className="mt-3 max-w-3xl">Papers and technical writing</h1>
             </HeroItem>
             <HeroItem>
               <p className="mt-6 max-w-2xl text-lg text-slate-500">
@@ -54,6 +78,14 @@ export default function ResearchPage() {
                         <span className="text-xs font-medium tracking-wider text-teal-700 uppercase">
                           Whitepaper
                         </span>
+                        {wp.publishedDate && (
+                          <span className="text-xs text-slate-400">
+                            {new Intl.DateTimeFormat("en-GB", {
+                              month: "long",
+                              year: "numeric",
+                            }).format(new Date(wp.publishedDate))}
+                          </span>
+                        )}
                       </div>
                       <h2 className="mt-3 text-xl sm:text-2xl">{wp.title}</h2>
                       <p className="mt-3 max-w-2xl leading-relaxed text-slate-500">
@@ -61,15 +93,13 @@ export default function ResearchPage() {
                       </p>
                       <div className="mt-5 flex flex-wrap items-center gap-4">
                         {wp.readLink && (
-                          <a
-                            href={wp.readLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                          <Link
+                            href={`/research/${wp.slug}`}
                             className="inline-flex items-center gap-1.5 rounded-lg bg-teal-50 px-4 py-2 text-sm font-medium text-teal-800 transition-colors duration-150 hover:bg-teal-100"
                           >
-                            Read PDF
+                            Details
                             <ArrowUpRight size={14} />
-                          </a>
+                          </Link>
                         )}
                         {wp.btnLink && (
                           <a
@@ -91,6 +121,11 @@ export default function ResearchPage() {
               </FadeIn>
             ))}
           </div>
+          <p className="mt-8 max-w-3xl text-sm leading-relaxed text-slate-500">
+            Our research is provided for general information only. It is not
+            financial, legal, investment, or professional advice, and should not
+            be relied upon as a recommendation to make investment decisions.
+          </p>
         </div>
       </section>
     </>

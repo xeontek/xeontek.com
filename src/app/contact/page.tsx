@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   MapPin,
   Envelope,
@@ -8,21 +7,21 @@ import {
 import { ContactForm } from "@/components/ui/contact-form";
 import { HeroStagger, HeroItem } from "@/components/motion/hero-entrance";
 import { FadeIn } from "@/components/motion/fade-in";
-import { StaggerChildren, StaggerItem } from "@/components/motion/stagger-children";
+import {
+  StaggerChildren,
+  StaggerItem,
+} from "@/components/motion/stagger-children";
+import { company, registeredOfficeText } from "@/lib/company";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Contact",
   description:
     "Get in touch with XeonTek. General enquiries, partnership opportunities, or just to say hello.",
-};
+  path: "/contact",
+});
 
-export default async function ContactPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ subject?: string }>;
-}) {
-  const { subject } = await searchParams;
-
+export default function ContactPage() {
   return (
     <>
       {/* Hero + Form */}
@@ -42,8 +41,8 @@ export default async function ContactPage({
                 </HeroItem>
                 <HeroItem>
                   <p className="mt-4 max-w-lg text-lg text-slate-500">
-                    Questions, ideas, or just curious about what we do — we&apos;d be
-                    happy to hear from you.
+                    Questions, ideas, or just curious about what we do —
+                    we&apos;d be happy to hear from you.
                   </p>
                 </HeroItem>
               </HeroStagger>
@@ -112,7 +111,7 @@ export default async function ContactPage({
                   We&apos;ll get back to you as soon as we can.
                 </p>
                 <div className="mt-6">
-                  <ContactForm subject={subject} />
+                  <ContactForm />
                 </div>
               </div>
             </FadeIn>
@@ -128,8 +127,10 @@ export default async function ContactPage({
               <p className="text-xs font-medium tracking-wider text-slate-400 uppercase">
                 Registered address
               </p>
-              <address className="text-sm not-italic text-slate-500">
-                XeonTek Ltd, 27 Old Gloucester Street, London, WC1N 3AX, United Kingdom
+              <address className="text-sm text-slate-500 not-italic">
+                {company.name}, company number {company.registrationNumber},{" "}
+                registered in {company.registrationJurisdiction}. Registered
+                office: {registeredOfficeText}.
               </address>
             </div>
           </FadeIn>

@@ -247,7 +247,7 @@ export default function HomePage() {
               {whitepapers.map((wp) => (
                 <StaggerItem key={wp.slug}>
                   <Link
-                    href="/research"
+                    href={`/research/${wp.slug}`}
                     className="group block rounded-xl border border-slate-200 bg-white p-6 transition-all duration-200 hover:border-teal-200 hover:shadow-sm"
                   >
                     <span className="inline-block rounded-md bg-teal-50 px-2 py-0.5 text-xs font-medium text-teal-700">

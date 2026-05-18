@@ -36,11 +36,12 @@
   --color-teal-900: oklch(54.08% 0.0908 194.8);
   --color-teal-950: oklch(32.68% 0.047 195.1);
 
-  --font-heading: var(--font-space-grotesk), "Inter", system-ui, sans-serif;
-  --font-body: var(--font-geist-sans), system-ui, -apple-system,
-    BlinkMacSystemFont, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono",
-    "Cascadia Code", monospace;
+  --font-heading: var(--font-geist-sans), "Inter", system-ui, sans-serif;
+  --font-body:
+    var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont,
+    sans-serif;
+  --font-mono:
+    var(--font-geist-mono), ui-monospace, "SF Mono", "Cascadia Code", monospace;
 }
 
 @keyframes marquee-scroll {
@@ -58,6 +59,18 @@
   }
   100% {
     stroke-dashoffset: -300;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    scroll-behavior: auto !important;
+  }
+
+  .motion-safe-animation {
+    animation: none !important;
   }
 }
 
@@ -99,5 +112,9 @@
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
+  }
+
+  a {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2;
   }
 }

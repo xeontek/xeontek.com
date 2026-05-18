@@ -1,49 +1,69 @@
 # XeonTek Website
 
-Next.js 15 corporate website deployed on Vercel.
+Static Next.js corporate website for Cloudflare Pages, with a small Cloudflare
+Worker for contact form submissions.
 
 ## Getting Started
 
-```
+```bash
 npm install
 npm run dev
 ```
 
-## Environment Variables
+## Build
 
-### Contact Form (Nodemailer + Google Workspace SMTP)
-
-The contact form sends emails via Google Workspace SMTP. You need three environment variables:
-
-| Variable    | Description                                      | Example                    |
-| ----------- | ------------------------------------------------ | -------------------------- |
-| `SMTP_USER` | Google Workspace email used to send              | `enquiries@xeontek.com`    |
-| `SMTP_PASS` | Google App Password (not your account password)  | `abcd efgh ijkl mnop`      |
-| `SMTP_TO`   | Recipient email (optional, defaults to SMTP_USER)| `team@xeontek.com`         |
-
-### Creating a Google App Password
-
-1. Sign in to [myaccount.google.com](https://myaccount.google.com) with the Workspace email
-2. Ensure 2-Step Verification is enabled on the account
-3. Go to [myaccount.google.com/security](https://myaccount.google.com/security) and under **"How you sign in to Google"**, click **App passwords**
-4. Enter a name for the app (e.g. `Nodemailer`), then click **Create**
-5. Copy the 16-character password and use it as `SMTP_PASS`
-
-> **Note:** 2-Step Verification must be enabled on the account. For Google Workspace accounts, an admin must also enable **"Allow users to generate app passwords"** in the Admin Console under **Security > Authentication > 2-Step Verification**.
-
-### Adding to Vercel
-
-```
-vercel env add SMTP_USER
-vercel env add SMTP_PASS
-vercel env add SMTP_TO
+```bash
+npm run build
 ```
 
-Or add them in the Vercel dashboard under **Settings > Environment Variables**.
+The static export is written to `out/`.
 
-For local development, create a `.env.local` file:
+## Cloudflare Deployment
 
+Full setup notes are in `CLOUDFLARE_SETUP.md`.
+
+Deploy the static site to Cloudflare Pages:
+
+```bash
+npm run build
+npm run deploy:static
 ```
-SMTP_USER=enquiries@xeontek.com
-SMTP_PASS=your-app-password
+
+Deploy the contact form Worker:
+
+```bash
+npm run deploy:contact
 ```
+
+Route the Worker only to:
+
+```text
+xeontek.com/api/contact
+www.xeontek.com/api/contact
+```
+
+Static page traffic remains on Cloudflare Pages. Only contact form submissions
+invoke the Worker.
+
+## Contact Form
+
+The contact form uses:
+
+- Cloudflare Turnstile for bot protection.
+- Cloudflare Email Routing `send_email` binding for delivery.
+- No Web3Forms, hCaptcha, SMTP credentials, or paid form service.
+
+Required Cloudflare setup:
+
+1. Enable Email Routing for `xeontek.com`.
+2. Verify the destination mailbox used by the `CONTACT_EMAIL` binding.
+3. Create a Turnstile widget for `xeontek.com`.
+4. Add the public key as `NEXT_PUBLIC_TURNSTILE_SITE_KEY` in Pages build variables.
+5. Add the secret key to the Worker:
+
+```bash
+wrangler secret put TURNSTILE_SECRET_KEY
+```
+
+The Worker sender address must be on the domain where Email Routing is active.
+The current defaults are configured in `wrangler.toml`.

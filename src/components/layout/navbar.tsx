@@ -20,7 +20,7 @@ export function Navbar() {
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <Link
           href="/"
-          className="text-2xl font-light tracking-tight text-slate-400 font-body"
+          className="font-body text-2xl font-light tracking-tight text-slate-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-4"
           translate="no"
         >
           <span className="font-semibold text-teal-700">Xeon</span>Tek
@@ -33,10 +33,12 @@ export function Navbar() {
               href={href}
               className={cn(
                 "text-sm font-medium transition-colors duration-150",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-4",
                 pathname === href
                   ? "text-slate-900"
                   : "text-slate-500 hover:text-slate-900",
               )}
+              aria-current={pathname === href ? "page" : undefined}
             >
               {label}
             </Link>

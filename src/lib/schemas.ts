@@ -5,6 +5,7 @@ import { z } from "zod/v4";
 export const whitepaperSchema = z.object({
   title: z.string(),
   description: z.string(),
+  publishedDate: z.string().optional(),
   readLink: z.string().optional(),
   btnTitle: z.string().optional(),
   btnLink: z.string().optional(),

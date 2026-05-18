@@ -2,17 +2,35 @@
 
 const rows = [
   {
-    items: ["No black boxes", "Explainable models", "Traceable predictions", "Data-first design", "Test everything"],
+    items: [
+      "No black boxes",
+      "Explainable models",
+      "Traceable predictions",
+      "Data-first design",
+      "Test everything",
+    ],
     duration: "30s",
     direction: "normal",
   },
   {
-    items: ["Own what we ship", "No handoffs", "Monitor in production", "Self-funded rigour", "Correctness over speed"],
+    items: [
+      "Own what we ship",
+      "No handoffs",
+      "Monitor in production",
+      "Self-funded rigour",
+      "Correctness over speed",
+    ],
     duration: "40s",
     direction: "reverse",
   },
   {
-    items: ["Long-term bets", "Ten-year architectures", "Depth over breadth", "Build to last", "No hype-driven decisions"],
+    items: [
+      "Long-term bets",
+      "Ten-year architectures",
+      "Depth over breadth",
+      "Build to last",
+      "No hype-driven decisions",
+    ],
     duration: "25s",
     direction: "normal",
   },
@@ -32,7 +50,7 @@ function MarqueeRow({
   return (
     <div className="group flex flex-row overflow-hidden py-2">
       <div
-        className="flex w-max min-w-full shrink-0 flex-row flex-nowrap justify-around gap-5"
+        className="motion-safe-animation flex w-max min-w-full shrink-0 flex-row flex-nowrap justify-around gap-5"
         style={{
           animation: `marquee-scroll ${duration} ${direction} linear infinite`,
         }}

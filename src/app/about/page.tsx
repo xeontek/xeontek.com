@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   Target,
   HandHeart,
@@ -11,15 +10,21 @@ import {
   Handshake,
 } from "@phosphor-icons/react/dist/ssr";
 import { FadeIn } from "@/components/motion/fade-in";
-import { StaggerChildren, StaggerItem } from "@/components/motion/stagger-children";
+import {
+  StaggerChildren,
+  StaggerItem,
+} from "@/components/motion/stagger-children";
 import { HeroStagger, HeroItem } from "@/components/motion/hero-entrance";
 import { AiCapabilities } from "@/components/ui/ai-capabilities";
+import { company, registeredOfficeText } from "@/lib/company";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "About",
   description:
     "XeonTek is a self-funded technology company building platforms for property analytics, investment intelligence, and capital networks. Founded in London, 2013.",
-};
+  path: "/about",
+});
 
 const values = [
   {
@@ -83,9 +88,7 @@ export default function AboutPage() {
               </p>
             </HeroItem>
             <HeroItem>
-              <h1 className="mt-3 max-w-3xl">
-                Built for depth, not scale.
-              </h1>
+              <h1 className="mt-3 max-w-3xl">Built for depth, not scale.</h1>
             </HeroItem>
             <HeroItem>
               <p className="mt-6 max-w-2xl text-lg text-slate-500">
@@ -108,7 +111,10 @@ export default function AboutPage() {
       {/* Stats strip */}
       <section className="border-y border-slate-200 bg-white">
         <div className="mx-auto max-w-5xl px-6">
-          <StaggerChildren className="grid grid-cols-2 divide-y divide-slate-200 sm:grid-cols-4 sm:divide-x sm:divide-y-0" stagger={0.1}>
+          <StaggerChildren
+            className="grid grid-cols-2 divide-y divide-slate-200 sm:grid-cols-4 sm:divide-x sm:divide-y-0"
+            stagger={0.1}
+          >
             {stats.map(({ label, value, icon: Icon }) => (
               <StaggerItem key={label}>
                 <div className="flex items-center gap-4 py-6 sm:justify-center sm:py-8">
@@ -116,8 +122,12 @@ export default function AboutPage() {
                     <Icon size={20} />
                   </div>
                   <div>
-                    <p className="text-xs font-medium tracking-wider text-slate-400 uppercase">{label}</p>
-                    <p className="mt-0.5 text-sm font-medium text-slate-900">{value}</p>
+                    <p className="text-xs font-medium tracking-wider text-slate-400 uppercase">
+                      {label}
+                    </p>
+                    <p className="mt-0.5 text-sm font-medium text-slate-900">
+                      {value}
+                    </p>
                   </div>
                 </div>
               </StaggerItem>
@@ -133,7 +143,7 @@ export default function AboutPage() {
             <h2>Our story</h2>
           </FadeIn>
           <FadeIn delay={0.1}>
-            <div className="mt-8 space-y-5 text-slate-600 leading-relaxed">
+            <div className="mt-8 space-y-5 leading-relaxed text-slate-600">
               <p>
                 XeonTek was founded in London in 2013. We started with a simple
                 observation: the markets we cared about — property, emerging
@@ -143,12 +153,12 @@ export default function AboutPage() {
               </p>
               <p>
                 So we started building our own. First in real estate, where we
-                built platforms that aggregate market data and connect investors,
-                buyers, and tenants with property providers. Then into emerging
-                markets, where we track and analyse regions where reliable
-                information is hardest to find. And more recently into capital
-                networks, building tools that match founders with the right
-                investors — angels, VCs, and syndicates.
+                built platforms that aggregate market data and connect
+                investors, buyers, and tenants with property providers. Then
+                into emerging markets, where we track and analyse regions where
+                reliable information is hardest to find. And more recently into
+                capital networks, building tools that match founders with the
+                right investors — angels, VCs, and syndicates.
               </p>
               <p>
                 We&apos;re a self-funded company. We don&apos;t take on client
@@ -164,8 +174,9 @@ export default function AboutPage() {
                 into our products rather than existing as a separate initiative.
               </p>
               <p>
-                Our team is small and technical. We value depth over breadth, and
-                we&apos;d rather solve one problem well than five problems poorly.
+                Our team is small and technical. We value depth over breadth,
+                and we&apos;d rather solve one problem well than five problems
+                poorly.
               </p>
             </div>
           </FadeIn>
@@ -182,7 +193,11 @@ export default function AboutPage() {
             <h2 className="mt-3">Platforms for three markets</h2>
           </FadeIn>
 
-          <StaggerChildren className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3" stagger={0.1} delay={0.1}>
+          <StaggerChildren
+            className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3"
+            stagger={0.1}
+            delay={0.1}
+          >
             {expertise.map(({ icon: Icon, title, description }) => (
               <StaggerItem key={title}>
                 <div className="h-full rounded-xl border border-teal-200/60 bg-white p-6 transition-all duration-300 hover:border-teal-300 hover:shadow-md sm:p-8">
@@ -210,10 +225,14 @@ export default function AboutPage() {
             <h2 className="mt-3">What drives us</h2>
           </FadeIn>
 
-          <StaggerChildren className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3" stagger={0.1} delay={0.1}>
+          <StaggerChildren
+            className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3"
+            stagger={0.1}
+            delay={0.1}
+          >
             {values.map(({ icon: Icon, title, description }) => (
               <StaggerItem key={title}>
-                <div className="h-full rounded-xl border border-slate-200 bg-white p-6 sm:p-8 transition-all duration-300 hover:border-teal-200 hover:shadow-md">
+                <div className="h-full rounded-xl border border-slate-200 bg-white p-6 transition-all duration-300 hover:border-teal-200 hover:shadow-md sm:p-8">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-50 text-teal-700">
                     <Icon size={22} />
                   </div>
@@ -234,7 +253,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
             <FadeIn direction="left">
               <h2>Team</h2>
-              <p className="mt-4 text-slate-600 leading-relaxed">
+              <p className="mt-4 leading-relaxed text-slate-600">
                 XeonTek is led by two co-founders with backgrounds in software
                 engineering and technology. Our team is small by design — we
                 value focused execution over headcount.
@@ -242,14 +261,16 @@ export default function AboutPage() {
             </FadeIn>
             <FadeIn direction="right">
               <h2>Location</h2>
-              <p className="mt-4 text-slate-600 leading-relaxed">
-                Registered in London, United Kingdom. Our team works remotely
+              <p className="mt-4 leading-relaxed text-slate-600">
+                {company.name} is registered in{" "}
+                {company.registrationJurisdiction}. Our team works remotely
                 across the UK.
               </p>
               <div className="mt-4 flex items-start gap-2 text-sm text-slate-500">
                 <MapPin size={16} className="mt-0.5 shrink-0 text-slate-400" />
                 <address className="not-italic">
-                  XeonTek Ltd, 27 Old Gloucester Street, London, WC1N 3AX
+                  {company.name}, company number {company.registrationNumber},{" "}
+                  {registeredOfficeText}
                 </address>
               </div>
             </FadeIn>

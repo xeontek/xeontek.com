@@ -18,6 +18,12 @@ export function getWhitepapers(): Whitepaper[] {
   });
 }
 
+export function getWhitepaper(slug: string): Whitepaper | null {
+  return (
+    getWhitepapers().find((whitepaper) => whitepaper.slug === slug) ?? null
+  );
+}
+
 export function getJobs(): Job[] {
   const dir = path.join(DATA_DIR, "jobs");
 

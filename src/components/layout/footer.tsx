@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LinkedinLogo } from "@phosphor-icons/react/dist/ssr";
+import { company, registeredOfficeText } from "@/lib/company";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -11,6 +12,7 @@ const navLinks = [
 const legalLinks = [
   { href: "/privacy", label: "Privacy Policy" },
   { href: "/terms", label: "Terms of Use" },
+  { href: "/security", label: "Security" },
 ];
 
 export function Footer() {
@@ -22,7 +24,10 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
           {/* Company */}
           <div>
-            <p className="text-xl font-light text-slate-400 font-body" translate="no">
+            <p
+              className="font-body text-xl font-light text-slate-400"
+              translate="no"
+            >
               <span className="font-semibold text-teal-700">Xeon</span>Tek
             </p>
             <p className="mt-2 text-sm text-slate-500">
@@ -32,7 +37,7 @@ export function Footer() {
               href="https://www.linkedin.com/company/xeontek"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-3 inline-flex text-slate-400 transition-colors duration-150 hover:text-slate-600"
+              className="mt-3 inline-flex text-slate-400 transition-colors duration-150 hover:text-slate-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-4"
               aria-label="XeonTek on LinkedIn"
             >
               <LinkedinLogo size={20} />
@@ -49,7 +54,7 @@ export function Footer() {
                 <li key={href}>
                   <Link
                     href={href}
-                    className="text-sm text-slate-500 transition-colors duration-150 hover:text-slate-900"
+                    className="text-sm text-slate-500 transition-colors duration-150 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-4"
                   >
                     {label}
                   </Link>
@@ -68,7 +73,7 @@ export function Footer() {
                 <li key={href}>
                   <Link
                     href={href}
-                    className="text-sm text-slate-500 transition-colors duration-150 hover:text-slate-900"
+                    className="text-sm text-slate-500 transition-colors duration-150 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-4"
                   >
                     {label}
                   </Link>
@@ -79,10 +84,16 @@ export function Footer() {
         </div>
 
         <div className="mt-12 border-t border-slate-100 pt-6">
-          <p className="text-xs text-slate-400">
-            &copy; 2013&ndash;{currentYear} XeonTek Ltd. Registered in England
-            &amp; Wales.
-          </p>
+          <div className="space-y-1 text-xs text-slate-400">
+            <p>
+              &copy; 2013&ndash;{currentYear} {company.name}. Registered in{" "}
+              {company.registrationJurisdiction}.
+            </p>
+            <p>
+              Company number {company.registrationNumber}. Registered office:{" "}
+              {registeredOfficeText}.
+            </p>
+          </div>
         </div>
       </div>
     </footer>
