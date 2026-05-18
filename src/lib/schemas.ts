@@ -20,6 +20,12 @@ export const jobSchema = z.object({
   description: z.string(),
   date: z.coerce.date(),
   status: z.enum(["filled", "open"]).optional().default("open"),
+  location: z.string().optional(),
+  type: z.string().optional(),
+  focus: z.string().optional(),
+  priority: z.number().optional(),
+  responsibilities: z.array(z.string()).optional(),
+  requirements: z.array(z.string()).optional(),
 });
 
 export type Job = z.infer<typeof jobSchema> & { slug: string; content: string };

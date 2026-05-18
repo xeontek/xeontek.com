@@ -5,6 +5,8 @@ compatibility_date = "2026-05-18"
 routes = [
   { pattern = "xeontek.com/api/contact", zone_name = "xeontek.com" },
   { pattern = "www.xeontek.com/api/contact", zone_name = "xeontek.com" },
+  { pattern = "xeontek.com/api/apply", zone_name = "xeontek.com" },
+  { pattern = "www.xeontek.com/api/apply", zone_name = "xeontek.com" },
 ]
 
 [[send_email]]
