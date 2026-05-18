@@ -5,9 +5,7 @@ import {
   MapPin,
   Users,
   Calendar,
-  Buildings,
   Globe,
-  Handshake,
   Compass,
   Code,
   ShieldCheck,
@@ -22,14 +20,13 @@ import {
   StaggerItem,
 } from "@/components/motion/stagger-children";
 import { HeroStagger, HeroItem } from "@/components/motion/hero-entrance";
-import { AiCapabilities } from "@/components/ui/ai-capabilities";
 import { company, registeredOfficeText } from "@/lib/company";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "About",
+  title: "Company",
   description:
-    "XeonTek is a self-funded technology company building platforms for property analytics, investment intelligence, and capital networks. Founded in London, 2013.",
+    "Company information for XeonTek, a self-funded UK technology company founded in London in 2013.",
   path: "/about",
 });
 
@@ -57,29 +54,8 @@ const values = [
 const stats = [
   { label: "Founded", value: "2013", icon: Calendar },
   { label: "Headquarters", value: "London, UK", icon: MapPin },
-  { label: "Markets", value: "Property, Emerging, Capital", icon: Globe },
+  { label: "Focus", value: "Product company", icon: Globe },
   { label: "Model", value: "Self-funded", icon: Users },
-];
-
-const expertise = [
-  {
-    icon: Buildings,
-    title: "Property Platforms",
-    description:
-      "Aggregating real estate market data and connecting investors, buyers, and tenants with property providers across fragmented markets.",
-  },
-  {
-    icon: Globe,
-    title: "Emerging Market Intelligence",
-    description:
-      "Tracking and analysing markets where reliable data is scarce — surfacing opportunities, risks, and regional trends to inform real decisions.",
-  },
-  {
-    icon: Handshake,
-    title: "Deal Flow & Capital Networks",
-    description:
-      "Platforms for angel investors, VCs, and investment networks — deal tracking, portfolio oversight, and matching between founders and capital.",
-  },
 ];
 
 const operatingModel = [
@@ -191,27 +167,22 @@ export default function AboutPage() {
           <HeroStagger>
             <HeroItem>
               <p className="text-sm font-medium tracking-wider text-teal-700 uppercase">
-                About us
+                Company
               </p>
             </HeroItem>
             <HeroItem>
-              <h1 className="mt-3 max-w-3xl">Built for depth, not scale.</h1>
+              <h1 className="mt-3 max-w-3xl">
+                The company behind the platforms.
+              </h1>
             </HeroItem>
             <HeroItem>
               <p className="mt-6 max-w-2xl text-lg text-slate-500">
-                We&apos;re a self-funded technology company that builds its own
-                platforms, powered by our own applied AI research. No clients,
-                no investors — just focused engineering.
+                XeonTek is a self-funded UK technology company founded in London
+                in 2013. We build and operate our own products, with a small
+                technical team and a long-term view of the systems we create.
               </p>
             </HeroItem>
           </HeroStagger>
-        </div>
-      </section>
-
-      {/* AI Capabilities — prominent infographic */}
-      <section className="py-16 sm:py-20">
-        <div className="mx-auto max-w-5xl px-6">
-          <AiCapabilities />
         </div>
       </section>
 
@@ -293,19 +264,15 @@ export default function AboutPage() {
             <div className="mt-8 space-y-5 leading-relaxed text-slate-600">
               <p>
                 XeonTek was founded in London in 2013. We started with a simple
-                observation: the markets we cared about — property, emerging
-                economies, early-stage investment — were full of fragmented data
-                and disconnected people. The tools that existed were either too
-                expensive, too generic, or built for a different era.
+                observation: important markets were still being served by
+                fragmented data, manual workflows, and tools that were either
+                too generic or built for a different era.
               </p>
               <p>
-                So we started building our own. First in real estate, where we
-                built platforms that aggregate market data and connect
-                investors, buyers, and tenants with property providers. Then
-                into emerging markets, where we track and analyse regions where
-                reliable information is hardest to find. And more recently into
-                capital networks, building tools that match founders with the
-                right investors — angels, VCs, and syndicates.
+                Rather than building around client projects, we chose to build
+                our own portfolio of products. That operating model gives us
+                room to work on difficult data problems, revisit assumptions,
+                and improve the same systems over time.
               </p>
               <p>
                 We&apos;re a self-funded company. We don&apos;t take on client
@@ -315,10 +282,10 @@ export default function AboutPage() {
                 else&apos;s deadline.
               </p>
               <p>
-                Alongside our platforms, we invest in applied AI research —
-                building our own models for pattern recognition, market
-                analysis, and intelligent matching. This R&amp;D feeds directly
-                into our products rather than existing as a separate initiative.
+                Alongside product engineering, we invest in applied AI and data
+                research where it supports a real product workflow. That work
+                feeds into product decisions rather than sitting apart as a
+                separate research initiative.
               </p>
               <p>
                 Our team is small and technical. We value depth over breadth,
@@ -352,38 +319,6 @@ export default function AboutPage() {
               </FadeIn>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Expertise */}
-      <section className="bg-gradient-to-b from-teal-50 to-white py-20 sm:py-28">
-        <div className="mx-auto max-w-5xl px-6">
-          <FadeIn>
-            <p className="text-sm font-medium tracking-wider text-teal-700 uppercase">
-              What we build
-            </p>
-            <h2 className="mt-3">Platforms for three markets</h2>
-          </FadeIn>
-
-          <StaggerChildren
-            className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3"
-            stagger={0.1}
-            delay={0.1}
-          >
-            {expertise.map(({ icon: Icon, title, description }) => (
-              <StaggerItem key={title}>
-                <div className="h-full rounded-xl border border-teal-200/60 bg-white p-6 transition-all duration-300 hover:border-teal-300 hover:shadow-md sm:p-8">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-50 text-teal-700">
-                    <Icon size={22} />
-                  </div>
-                  <h3 className="mt-5 text-lg">{title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-500">
-                    {description}
-                  </p>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerChildren>
         </div>
       </section>
 

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import {
   ArrowUpRight,
-  DownloadSimple,
   BookOpenText,
   ChartLine,
   FlowArrow,
@@ -128,7 +127,7 @@ export default function ResearchPage() {
       name: wp.title,
       description: wp.description,
       datePublished: wp.publishedDate,
-      url: wp.readLink ? absoluteUrl(wp.readLink) : `${siteUrl}/research`,
+      url: absoluteUrl(`/research/${wp.slug}`),
       publisher: {
         "@id": `${siteUrl}/#organization`,
       },
@@ -272,17 +271,6 @@ export default function ResearchPage() {
                             Details
                             <ArrowUpRight size={14} />
                           </Link>
-                        )}
-                        {wp.btnLink && (
-                          <a
-                            href={wp.btnLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition-colors duration-150 hover:border-slate-300 hover:bg-slate-50"
-                          >
-                            <DownloadSimple size={14} />
-                            {wp.btnTitle ?? "Download"}
-                          </a>
                         )}
                       </div>
                     </div>

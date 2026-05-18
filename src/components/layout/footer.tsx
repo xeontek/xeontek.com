@@ -4,7 +4,7 @@ import { company, registeredOfficeText } from "@/lib/company";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
+  { href: "/about", label: "Company" },
   { href: "/research", label: "Research" },
   { href: "/contact", label: "Contact" },
 ];

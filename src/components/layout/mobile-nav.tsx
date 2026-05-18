@@ -3,20 +3,19 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { List, X } from "@phosphor-icons/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
+  { href: "/about", label: "Company" },
   { href: "/research", label: "Research" },
   { href: "/contact", label: "Contact" },
 ];
 
-interface MobileNavProps {
-  currentPath: string;
-}
+export function MobileNav() {
+  const currentPath = usePathname();
 
-export function MobileNav({ currentPath }: MobileNavProps) {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>

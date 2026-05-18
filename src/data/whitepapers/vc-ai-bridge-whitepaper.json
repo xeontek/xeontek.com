@@ -1,6 +1,17 @@
 {
   "title": "Bridging the Angel-to-VC Gap with AI-Powered Investment Intelligence",
   "description": "Learn how XeonTek utilizes AI to connect angel investors with venture capital opportunities, enhancing decision-making through data-driven insights.",
+  "summary": [
+    "This paper examines how AI-assisted investment intelligence can help improve discovery, filtering, and relationship mapping between angels, founders, and venture capital networks.",
+    "It focuses on the information gap between early angel activity and later institutional funding, where deal context is often fragmented across people, documents, and private networks.",
+    "The paper is general research only and is not investment advice, fundraising advice, or a recommendation about any company or transaction."
+  ],
+  "keyPoints": [
+    "Private market discovery depends on both structured data and relationship context.",
+    "AI-assisted matching can help surface relevant opportunities, but it should not replace human judgement.",
+    "Deal intelligence is more useful when provenance, assumptions, and confidence levels remain visible.",
+    "Better tooling can help founders and investors coordinate earlier without turning discovery into a black box."
+  ],
   "publishedDate": "2026-03-10",
   "readLink": "/docs/whitepapers/XeonTek-vc-ai-bridge-whitepaper.pdf"
 }

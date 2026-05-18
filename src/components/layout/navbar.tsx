@@ -1,20 +1,14 @@
-"use client";
-
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
 import { MobileNav } from "./mobile-nav";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
+  { href: "/about", label: "Company" },
   { href: "/research", label: "Research" },
   { href: "/contact", label: "Contact" },
 ];
 
 export function Navbar() {
-  const pathname = usePathname();
-
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur-sm">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
@@ -31,21 +25,14 @@ export function Navbar() {
             <Link
               key={href}
               href={href}
-              className={cn(
-                "text-sm font-medium transition-colors duration-150",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-4",
-                pathname === href
-                  ? "text-slate-900"
-                  : "text-slate-500 hover:text-slate-900",
-              )}
-              aria-current={pathname === href ? "page" : undefined}
+              className="text-sm font-medium text-slate-500 transition-colors duration-150 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-4"
             >
               {label}
             </Link>
           ))}
         </nav>
 
-        <MobileNav currentPath={pathname} />
+        <MobileNav />
       </div>
     </header>
   );

@@ -1,6 +1,17 @@
 {
   "title": "AI-Driven Financial Modeling for Real Estate Investment",
   "description": "Discover how XeonTek leverages AI to enhance financial modeling in real estate, providing investors with accurate forecasts and data-driven insights.",
+  "summary": [
+    "This paper explores how AI-assisted modelling can support real estate investment analysis by structuring assumptions, market signals, and asset-level inputs into clearer decision workflows.",
+    "It focuses on how data quality, explainability, and scenario design affect the usefulness of financial models in property markets.",
+    "The paper should be read as market and product research, not as investment advice or a recommendation to enter into any transaction."
+  ],
+  "keyPoints": [
+    "Fragmented real estate data needs careful normalisation before automated analysis is useful.",
+    "Scenario modelling is most valuable when assumptions and drivers remain visible to users.",
+    "AI can support pattern recognition and forecasting workflows, but human review remains important.",
+    "Financial models should be treated as decision-support tools rather than deterministic predictions."
+  ],
   "publishedDate": "2026-03-10",
   "readLink": "/docs/whitepapers/XeonTek-ai-driven-financial-modeling-real-estate-investment-whitepaper.pdf"
 }
