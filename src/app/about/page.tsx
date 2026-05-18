@@ -8,7 +8,14 @@ import {
   Buildings,
   Globe,
   Handshake,
+  Compass,
+  Code,
+  ShieldCheck,
+  Brain,
+  CheckCircle,
+  XCircle,
 } from "@phosphor-icons/react/dist/ssr";
+import Link from "next/link";
 import { FadeIn } from "@/components/motion/fade-in";
 import {
   StaggerChildren,
@@ -75,6 +82,106 @@ const expertise = [
   },
 ];
 
+const operatingModel = [
+  {
+    icon: Users,
+    title: "Self-funded",
+    description:
+      "We are not optimising for investor milestones or short-term fundraising narratives.",
+  },
+  {
+    icon: Compass,
+    title: "Product-led",
+    description: "We build platforms we own, improve, and operate over time.",
+  },
+  {
+    icon: Brain,
+    title: "Research-backed",
+    description:
+      "Our AI and data work starts from specific market problems, not generic technology demos.",
+  },
+  {
+    icon: Code,
+    title: "Engineering-led",
+    description:
+      "Architecture, maintainability, and reliability matter because we live with the systems we build.",
+  },
+];
+
+const timeline = [
+  {
+    title: "2013",
+    description:
+      "XeonTek founded in London as a software company focused on building durable technology products.",
+  },
+  {
+    title: "Property platforms",
+    description:
+      "Early work focused on real estate data, property discovery, and connecting users with providers in fragmented markets.",
+  },
+  {
+    title: "Market intelligence",
+    description:
+      "The company expanded its research and data work into emerging markets where reliable information is harder to access.",
+  },
+  {
+    title: "Capital networks",
+    description:
+      "XeonTek began developing tools around deal flow, founder discovery, investor matching, and early-stage market intelligence.",
+  },
+  {
+    title: "Applied AI research",
+    description:
+      "AI research became a core part of the product process, supporting modelling, classification, matching, and market analysis.",
+  },
+];
+
+const notUs = [
+  {
+    title: "Not an agency",
+    description:
+      "We do not position the company around client delivery or outsourced development work.",
+  },
+  {
+    title: "Not a consultancy wrapper",
+    description:
+      "Our research exists to support products, not to create slide decks without implementation.",
+  },
+  {
+    title: "Not an AI gimmick company",
+    description:
+      "We use AI where it improves a workflow, model, search experience, or analytical process. We do not treat it as a substitute for domain understanding.",
+  },
+  {
+    title: "Not chasing every market",
+    description:
+      "We focus on property, emerging market intelligence, and capital networks because these domains share similar data and relationship problems.",
+  },
+];
+
+const decisionCriteria = [
+  {
+    title: "Market complexity",
+    description:
+      "Is the problem difficult because data, workflows, or relationships are fragmented?",
+  },
+  {
+    title: "User value",
+    description:
+      "Does better software materially improve search, comparison, decision-making, or access?",
+  },
+  {
+    title: "Compounding advantage",
+    description:
+      "Does the platform become stronger as its data, models, and workflows mature?",
+  },
+  {
+    title: "Responsible use",
+    description:
+      "Can we build the product without overstating what automation or AI can safely decide?",
+  },
+];
+
 export default function AboutPage() {
   return (
     <>
@@ -136,6 +243,46 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Operating model */}
+      <section className="bg-white py-20 sm:py-28">
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[0.9fr_1.4fr]">
+            <FadeIn>
+              <p className="text-sm font-medium tracking-wider text-teal-700 uppercase">
+                Operating model
+              </p>
+              <h2 className="mt-3">How we operate</h2>
+              <p className="mt-4 leading-relaxed text-slate-600">
+                XeonTek is intentionally small, technical, and product-led. We
+                do not separate research, engineering, and operations into
+                disconnected functions. The same thinking that shapes a market
+                thesis also shapes the data model, user workflow,
+                infrastructure, and long-term maintenance plan.
+              </p>
+            </FadeIn>
+
+            <StaggerChildren
+              className="grid grid-cols-1 gap-4 sm:grid-cols-2"
+              stagger={0.1}
+            >
+              {operatingModel.map(({ icon: Icon, title, description }) => (
+                <StaggerItem key={title}>
+                  <div className="h-full rounded-xl border border-slate-200 bg-slate-50/70 p-6">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-teal-700 shadow-sm ring-1 ring-slate-200">
+                      <Icon size={22} />
+                    </div>
+                    <h3 className="mt-5 text-lg">{title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                      {description}
+                    </p>
+                  </div>
+                </StaggerItem>
+              ))}
+            </StaggerChildren>
+          </div>
+        </div>
+      </section>
+
       {/* Story */}
       <section className="py-20 sm:py-28">
         <div className="mx-auto max-w-3xl px-6">
@@ -183,6 +330,31 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Timeline */}
+      <section className="border-y border-slate-100 bg-slate-50 py-20 sm:py-28">
+        <div className="mx-auto max-w-5xl px-6">
+          <FadeIn>
+            <p className="text-sm font-medium tracking-wider text-teal-700 uppercase">
+              Timeline
+            </p>
+            <h2 className="mt-3">A long-term company, built deliberately</h2>
+          </FadeIn>
+
+          <div className="mt-12 space-y-4">
+            {timeline.map(({ title, description }) => (
+              <FadeIn key={title}>
+                <div className="grid grid-cols-1 gap-4 border-l-2 border-teal-200 bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:grid-cols-[12rem_1fr] sm:items-start">
+                  <h3 className="text-lg text-teal-800">{title}</h3>
+                  <p className="leading-relaxed text-slate-600">
+                    {description}
+                  </p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Expertise */}
       <section className="bg-gradient-to-b from-teal-50 to-white py-20 sm:py-28">
         <div className="mx-auto max-w-5xl px-6">
@@ -215,6 +387,84 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Positioning clarity */}
+      <section className="bg-white py-20 sm:py-28">
+        <div className="mx-auto max-w-5xl px-6">
+          <FadeIn>
+            <div className="max-w-2xl">
+              <p className="text-sm font-medium tracking-wider text-teal-700 uppercase">
+                Focus
+              </p>
+              <h2 className="mt-3">What we are not</h2>
+              <p className="mt-4 leading-relaxed text-slate-600">
+                Being clear about what we do not do is part of staying focused.
+              </p>
+            </div>
+          </FadeIn>
+
+          <StaggerChildren
+            className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2"
+            stagger={0.1}
+          >
+            {notUs.map(({ title, description }) => (
+              <StaggerItem key={title}>
+                <div className="flex h-full gap-4 rounded-xl border border-slate-200 bg-slate-50 p-6">
+                  <XCircle
+                    size={22}
+                    className="mt-0.5 shrink-0 text-slate-400"
+                    weight="duotone"
+                  />
+                  <div>
+                    <h3 className="text-lg">{title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                      {description}
+                    </p>
+                  </div>
+                </div>
+              </StaggerItem>
+            ))}
+          </StaggerChildren>
+        </div>
+      </section>
+
+      {/* Decision criteria */}
+      <section className="bg-gradient-to-b from-slate-100 via-slate-50 to-white py-20 sm:py-28">
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[0.9fr_1.4fr]">
+            <FadeIn>
+              <p className="text-sm font-medium tracking-wider text-teal-700 uppercase">
+                Product decisions
+              </p>
+              <h2 className="mt-3">How we make product decisions</h2>
+              <p className="mt-4 leading-relaxed text-slate-600">
+                We prioritise problems that meet three tests: the market is
+                underserved by existing software, the data is difficult enough
+                to require deep modelling, and the product can become more
+                useful over time as its knowledge base improves.
+              </p>
+            </FadeIn>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {decisionCriteria.map(({ title, description }) => (
+                <FadeIn key={title}>
+                  <div className="h-full rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+                    <CheckCircle
+                      size={22}
+                      className="text-teal-700"
+                      weight="duotone"
+                    />
+                    <h3 className="mt-4 text-lg">{title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                      {description}
+                    </p>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Values */}
       <section className="bg-gradient-to-b from-slate-100 via-slate-50 to-white py-20 sm:py-28">
         <div className="mx-auto max-w-5xl px-6">
@@ -244,6 +494,49 @@ export default function AboutPage() {
               </StaggerItem>
             ))}
           </StaggerChildren>
+        </div>
+      </section>
+
+      {/* Trust and governance */}
+      <section className="border-y border-slate-100 bg-white py-16 sm:py-20">
+        <div className="mx-auto max-w-5xl px-6">
+          <FadeIn>
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+              <div className="max-w-2xl">
+                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-teal-50 text-teal-700">
+                  <ShieldCheck size={24} />
+                </div>
+                <p className="mt-6 text-sm font-medium tracking-wider text-teal-700 uppercase">
+                  Trust and governance
+                </p>
+                <h2 className="mt-3">Trust, security, and responsible AI</h2>
+                <p className="mt-4 leading-relaxed text-slate-600">
+                  As XeonTek&apos;s platforms develop, we are building the
+                  internal foundations needed for responsible operation: clear
+                  data handling, security controls, AI governance, and
+                  product-specific documentation. The public website does not
+                  provide an AI system or make automated decisions about
+                  visitors.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-3 lg:max-w-xs lg:justify-end">
+                {[
+                  { href: "/privacy", label: "Privacy Policy" },
+                  { href: "/security", label: "Security" },
+                  { href: "/terms", label: "Terms of Use" },
+                ].map(({ href, label }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    className="inline-flex items-center rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors duration-150 hover:border-teal-300 hover:text-teal-700"
+                  >
+                    {label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
