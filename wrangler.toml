@@ -1,6 +1,7 @@
 name = "xeontek"
 main = "worker/contact.ts"
 compatibility_date = "2026-05-18"
+preview_urls = true
 
 routes = [
   { pattern = "xeontek.com/api/contact", zone_name = "xeontek.com" },

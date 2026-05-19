@@ -69,11 +69,19 @@ Build output directory: out
 Node version: current LTS
 ```
 
+This repo uses `next.config.ts` with `output: "export"`, so Cloudflare Pages
+should serve the static export in `out`. Do not point Pages at `.next`, `public`,
+the repo root, or a Next adapter output.
+
 Set this Pages environment variable:
 
 ```text
 NEXT_PUBLIC_TURNSTILE_SITE_KEY=<your Turnstile site key>
 ```
+
+This is the only variable the static Pages build needs for Turnstile rendering.
+`TURNSTILE_SECRET_KEY` belongs to the Worker, not the Pages project, and should
+not affect whether the homepage loads.
 
 Deploy static pages with:
 
@@ -123,13 +131,28 @@ Cloudflare will flatten the apex CNAME where required.
 
 ## Cloudflare Worker
 
-Authenticate Wrangler:
+Authenticate Wrangler only if deploying from the command line:
 
 ```bash
 npx wrangler login
 ```
 
-Set the Turnstile secret for the Worker:
+Check whether local auth is actually working:
+
+```bash
+npx wrangler whoami
+```
+
+If interactive login does not complete after browser authorisation, set secrets
+and deploy through the Cloudflare dashboard or use a scoped
+`CLOUDFLARE_API_TOKEN` in CI.
+
+Set the Turnstile secret for the Worker, either in the dashboard or with
+Wrangler:
+
+```text
+Workers & Pages -> xeontek-contact -> Settings -> Variables and Secrets
+```
 
 ```bash
 npx wrangler secret put TURNSTILE_SECRET_KEY
@@ -189,6 +212,10 @@ The configured sender must be on the Email Routing domain.
 - Run `npm run build`.
 - Run `npx wrangler deploy --dry-run`.
 - Preview with `npm run preview`.
+- Confirm the Cloudflare Pages build output directory is `out`, not `.next`,
+  `public`, or the repo root.
+- Confirm the Pages deployment contains `index.html` at the output root.
+- Confirm the `*.pages.dev` deployment loads before changing production DNS.
 - Check desktop and mobile layouts.
 - Check `/robots.txt`, `/sitemap.xml`, `/privacy`, `/terms`, `/security`, and
   `/research`.

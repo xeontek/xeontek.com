@@ -118,11 +118,20 @@ Build output directory: out
 Node version: current LTS
 ```
 
+If Cloudflare asks for a framework preset, treat this as a static Next.js export
+and make sure the final output directory remains `out`. Do not configure the
+Pages project to serve `.next`, `public`, the repo root, or a Next adapter
+output.
+
 Set this Pages environment variable:
 
 ```text
 NEXT_PUBLIC_TURNSTILE_SITE_KEY=<production Turnstile site key>
 ```
+
+Do not add `TURNSTILE_SECRET_KEY` to the Pages project expecting it to affect
+the homepage. That secret is used by the Worker only. The homepage should render
+without any Worker secret.
 
 Deploy to the generated `*.pages.dev` URL and verify:
 
@@ -132,6 +141,22 @@ Deploy to the generated `*.pages.dev` URL and verify:
 - `/robots.txt` and `/sitemap.xml` load.
 - Whitepaper PDFs under `/docs/whitepapers/` load as intended.
 - Headers from `public/_headers` are present.
+
+If the homepage does not load on the `*.pages.dev` URL, fix the Pages deployment
+before changing DNS:
+
+- Confirm the Pages project root is the repository root.
+- Confirm the build command is exactly `npm run build`.
+- Confirm the build output directory is exactly `out`.
+- Confirm the deployment contains `out/index.html`.
+- Confirm the Cloudflare build log shows `next build` completed successfully.
+- Confirm the Pages deployment is not using `.next`, `public`, or the repo root
+  as the output directory.
+- Confirm the Pages deployment is not expecting a `_worker.js` or Pages
+  Functions output for the homepage.
+- Confirm no Cloudflare Worker route is attached to `xeontek.com/*` or
+  `www.xeontek.com/*`; only `/api/contact` and `/api/apply` should go to the
+  Worker.
 
 ## Phase 2: Prepare Turnstile
 
@@ -145,19 +170,55 @@ localhost
 
 Use the site key in Cloudflare Pages.
 
-Set the Worker secret:
+Set the Worker secret in the Cloudflare dashboard or with Wrangler.
+
+Dashboard path:
+
+```text
+Workers & Pages -> xeontek-contact -> Settings -> Variables and Secrets
+```
+
+Add:
+
+```text
+TURNSTILE_SECRET_KEY=<production Turnstile secret key>
+```
+
+If using Wrangler, first check whether local auth is usable:
+
+```bash
+npx wrangler whoami
+```
+
+If `whoami` works, set the secret:
 
 ```bash
 npx wrangler secret put TURNSTILE_SECRET_KEY
 ```
 
+If `wrangler login` opens a browser but does not complete, or appears to do
+nothing after authorisation, use the Cloudflare dashboard instead. A CI/API-token
+workflow is also valid, but the migration does not require local Wrangler auth
+just to set this secret.
+
 ## Phase 3: Prepare Worker And Email
 
-Authenticate Wrangler:
+Authenticate Wrangler only if you are deploying the Worker from the command
+line:
 
 ```bash
 npx wrangler login
 ```
+
+Check auth before deploying:
+
+```bash
+npx wrangler whoami
+```
+
+If local auth is unreliable, deploy the Worker through Cloudflare's dashboard or
+use a scoped `CLOUDFLARE_API_TOKEN` in CI instead of relying on interactive
+login.
 
 Dry-run the Worker:
 
@@ -198,6 +259,19 @@ mail routing are separate decisions.
 
 Before production cutover, verify in Cloudflare that the `send_email` binding is
 active and can deliver to `enquiries@xeontek.com`.
+
+Worker variables/secrets and Pages variables are separate. Check both:
+
+```text
+Pages project:
+  NEXT_PUBLIC_TURNSTILE_SITE_KEY
+
+Worker:
+  TURNSTILE_SECRET_KEY
+  CONTACT_FROM
+  CONTACT_TO
+  CONTACT_EMAIL send_email binding
+```
 
 ## Phase 4: DNS Cutover
 
@@ -277,6 +351,8 @@ curl -I -L https://www.xeontek.com/api/contact
 Verify:
 
 - HTTP responses no longer include `server: Vercel`.
+- The Cloudflare Pages `*.pages.dev` deployment loads before the custom domains
+  are pointed at it.
 - `xeontek.com` and `www.xeontek.com` resolve to Cloudflare Pages.
 - The selected canonical host redirects correctly.
 - `/api/contact` and `/api/apply` are handled by the Cloudflare Worker.
