@@ -1,4 +1,4 @@
-name = "xeontek-contact"
+name = "xeontek"
 main = "worker/contact.ts"
 compatibility_date = "2026-05-18"
 
