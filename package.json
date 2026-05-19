@@ -12,7 +12,6 @@
     "preview": "wrangler pages dev out",
     "deploy:static": "wrangler pages deploy out --project-name xeontek",
     "deploy:contact": "wrangler deploy",
-    "deploy": "npm run deploy:static && npm run deploy:contact",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
