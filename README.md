@@ -18,9 +18,20 @@ npm run build
 
 The static export is written to `out/`.
 
+## Documentation
+
+Repository documentation is consolidated in [`docs/`](./docs/):
+
+- [`docs/architecture.md`](./docs/architecture.md)
+- [`docs/deployment.md`](./docs/deployment.md)
+- [`docs/migration.md`](./docs/migration.md)
+- [`docs/design.md`](./docs/design.md)
+- [`docs/legal.md`](./docs/legal.md)
+- [`docs/todo.md`](./docs/todo.md)
+
 ## Cloudflare Deployment
 
-Full setup notes are in `CLOUDFLARE_SETUP.md`.
+Full setup notes are in [`docs/deployment.md`](./docs/deployment.md).
 
 Deploy the static site to Cloudflare Pages:
 
