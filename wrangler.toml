@@ -5,3 +5,8 @@ pages_build_output_dir = "out"
 
 [vars]
 NEXT_PUBLIC_TURNSTILE_SITE_KEY = "0x4AAAAAADSoOOQRbYdZ9vrI"
+CONTACT_FROM = "website@xeontek.com"
+CONTACT_TO = "enquiries@xeontek.com"
+
+[secrets]
+required = ["TURNSTILE_SECRET_KEY", "BREVO_API_KEY"]

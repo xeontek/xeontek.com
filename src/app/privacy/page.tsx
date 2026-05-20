@@ -158,9 +158,9 @@ export default function PrivacyPage() {
           <h2>4. Third-Party Processors and Transfers</h2>
           <p>
             We use Cloudflare, Inc. to host and secure this website, provide CDN
-            services, run Turnstile, operate the contact form Worker, and route
-            contact form messages through Cloudflare Email Routing. Cloudflare
-            processes personal data on our behalf as a service provider.
+            services, run Turnstile, and operate the form submission functions.
+            We use Brevo to deliver contact and application emails. These
+            providers process personal data on our behalf as service providers.
           </p>
           <p>
             Cloudflare may process data outside the United Kingdom and European

@@ -1,7 +1,7 @@
 # Architecture
 
-XeonTek is a static Next.js website deployed to Cloudflare Pages, with a small
-Cloudflare Worker for form submissions.
+XeonTek is a static Next.js website deployed to Cloudflare Pages, with Pages
+Functions for form submissions.
 
 ## Runtime Shape
 
@@ -12,7 +12,7 @@ Cloudflare Worker for form submissions.
 - `src/lib/` contains shared company data, content loading, schemas, SEO, and
   utilities.
 - `public/` contains static assets and Cloudflare Pages headers.
-- `worker/contact.ts` handles form endpoints through Cloudflare Workers.
+- `functions/api/` handles form endpoints through Cloudflare Pages Functions.
 
 ## Public Routes
 
@@ -30,16 +30,13 @@ Whitepaper PDFs are served from `public/docs/whitepapers/` and referenced as
 
 ## Form Flow
 
-Contact and application submissions are sent to Cloudflare Worker routes
-configured in `wrangler.toml`:
+Contact and application submissions are sent to Pages Function routes:
 
-- `xeontek.com/api/contact`
-- `www.xeontek.com/api/contact`
-- `xeontek.com/api/apply`
-- `www.xeontek.com/api/apply`
+- `/api/contact`
+- `/api/apply`
 
-The Worker verifies Turnstile responses and sends mail using the Cloudflare
-Email Routing `send_email` binding named `CONTACT_EMAIL`.
+The functions verify Turnstile responses and send mail through the Brevo
+Transactional Email API.
 
 ## Key Dependencies
 
@@ -48,4 +45,4 @@ Email Routing `send_email` binding named `CONTACT_EMAIL`.
 - Radix Dialog for mobile navigation.
 - Phosphor Icons for UI icons.
 - Zod for form validation.
-- Wrangler for Cloudflare Pages and Worker deployment.
+- Wrangler for Cloudflare Pages deployment.

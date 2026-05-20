@@ -32,16 +32,18 @@ export default function SecurityPage() {
           <p>
             This website is a static site hosted on Cloudflare Pages. It does
             not provide user accounts, payment processing, customer dashboards,
-            or public APIs. The contact form is protected by Cloudflare
-            Turnstile and delivered through a Cloudflare Worker.
+            or public APIs beyond form submission endpoints. The contact form is
+            protected by Cloudflare Turnstile and delivered through Cloudflare
+            Pages Functions.
           </p>
 
           <h2>Hosting and Subprocessors</h2>
           <p>
             Cloudflare provides hosting, CDN, security filtering, Turnstile bot
-            protection, Worker runtime, and contact message routing for this
-            website. Details about how website personal data is processed are in
-            our <a href="/privacy">Privacy Policy</a>.
+            protection, and the Pages Functions runtime for this website. Brevo
+            provides transactional email delivery. Details about how website
+            personal data is processed are in our{" "}
+            <a href="/privacy">Privacy Policy</a>.
           </p>
 
           <h2>Vulnerability Disclosure</h2>

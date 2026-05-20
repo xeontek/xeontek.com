@@ -16,8 +16,8 @@ legal wording should be reviewed by counsel where risk is material.
 
 - The contact form should include a point-of-collection privacy notice.
 - Privacy wording should cover contact enquiries, recruitment enquiries,
-  Turnstile verification, Cloudflare hosting/security logs, Email Routing, and
-  whitepaper/PDF request logs where relevant.
+  Turnstile verification, Cloudflare hosting/security logs, Brevo transactional
+  email delivery, and whitepaper/PDF request logs where relevant.
 - The site should state that it does not use analytics cookies unless that
   changes.
 - Cloudflare Turnstile may use cookies or similar technologies for bot and

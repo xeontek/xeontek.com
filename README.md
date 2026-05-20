@@ -1,7 +1,7 @@
 # XeonTek Website
 
-Static Next.js corporate website for Cloudflare Pages, with a small Cloudflare
-Worker for contact form submissions.
+Static Next.js corporate website for Cloudflare Pages, with Pages Functions for
+contact and application form submissions.
 
 ## Getting Started
 
@@ -37,48 +37,37 @@ Deploy the static site to Cloudflare Pages:
 
 ```bash
 npm run build
-npm run deploy:static
+npm run deploy
 ```
 
-Deploy the contact form Worker:
-
-```bash
-npm run deploy:contact
-```
-
-The Pages project uses `wrangler.toml`. The contact form Worker uses
-`wrangler.contact.toml`, so Cloudflare Pages can validate the root config during
-GitHub builds.
-
-Route the Worker only to:
+The Pages project uses `wrangler.toml` for build configuration and the
+`functions/` directory for API routes:
 
 ```text
-xeontek.com/api/contact
-www.xeontek.com/api/contact
+/api/contact
+/api/apply
 ```
 
-Static page traffic remains on Cloudflare Pages. Only contact form submissions
-invoke the Worker.
+Static page traffic remains on Cloudflare Pages. Only form submissions invoke
+Pages Functions.
 
 ## Contact Form
 
 The contact form uses:
 
 - Cloudflare Turnstile for bot protection.
-- Cloudflare Email Routing `send_email` binding for delivery.
-- No Web3Forms, hCaptcha, SMTP credentials, or paid form service.
+- Brevo Transactional Email API for delivery.
+- No Web3Forms, hCaptcha, SMTP credentials, Cloudflare Email Routing, or
+  separate Worker app.
 
 Required Cloudflare setup:
 
-1. Enable Email Routing for `xeontek.com`.
-2. Verify the destination mailbox used by the `CONTACT_EMAIL` binding.
-3. Create a Turnstile widget for `xeontek.com`.
-4. Add the public key as `NEXT_PUBLIC_TURNSTILE_SITE_KEY` in Pages build variables.
-5. Add the secret key to the Worker:
+1. Create a Turnstile widget for `xeontek.com`.
+2. Set the public key as `NEXT_PUBLIC_TURNSTILE_SITE_KEY` in `wrangler.toml`.
+3. Verify the sending domain or sender in Brevo.
+4. Add `TURNSTILE_SECRET_KEY` and `BREVO_API_KEY` as encrypted Pages secrets.
+5. Keep `CONTACT_FROM` and `CONTACT_TO` in `wrangler.toml` unless the defaults
+   need to change.
 
-```bash
-wrangler secret put TURNSTILE_SECRET_KEY
-```
-
-The Worker sender address must be on the domain where Email Routing is active.
-The current defaults are configured in `wrangler.toml`.
+The default sender is `website@xeontek.com` and the default recipient is
+`enquiries@xeontek.com`.

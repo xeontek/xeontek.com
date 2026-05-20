@@ -59,17 +59,17 @@ Live HTTP responses also show Vercel serving production:
 - `https://www.xeontek.com/api/contact` returns a Vercel 404.
 
 The nameserver migration is already done. The remaining work is to replace the
-Vercel web records, deploy the Cloudflare Pages site, and activate the
-Cloudflare Worker API routes.
+Vercel web records, deploy the Cloudflare Pages site, and verify the Pages
+Function API routes.
 
 ## Target Cloudflare State
 
 - Cloudflare Pages serves the static Next.js export from `out/`.
-- Cloudflare Workers handles only:
+- Cloudflare Pages Functions handle only:
   - `/api/contact`
   - `/api/apply`
 - Cloudflare Turnstile protects contact and application forms.
-- The Worker sends email through the Cloudflare `send_email` binding.
+- Pages Functions send email through the Brevo Transactional Email API.
 - Google Workspace MX records remain unchanged unless inbound email is
   intentionally migrated separately.
 - Vercel no longer serves production traffic.
@@ -87,13 +87,11 @@ const nextConfig = {
 };
 ```
 
-The Cloudflare Worker is configured in `wrangler.toml`:
+The Cloudflare Pages Functions are configured in `functions/api/`:
 
 ```text
-xeontek.com/api/contact
-www.xeontek.com/api/contact
-xeontek.com/api/apply
-www.xeontek.com/api/apply
+/api/contact
+/api/apply
 ```
 
 Validate the repo before creating or changing production records:
@@ -123,15 +121,22 @@ and make sure the final output directory remains `out`. Do not configure the
 Pages project to serve `.next`, `public`, the repo root, or a Next adapter
 output.
 
-Set this Pages environment variable:
+Set this public Pages build variable in `wrangler.toml`:
 
 ```text
 NEXT_PUBLIC_TURNSTILE_SITE_KEY=<production Turnstile site key>
 ```
 
-Do not add `TURNSTILE_SECRET_KEY` to the Pages project expecting it to affect
-the homepage. That secret is used by the Worker only. The homepage should render
-without any Worker secret.
+Add these values in the Pages project under Settings -> Variables and Secrets:
+
+```text
+TURNSTILE_SECRET_KEY=<production Turnstile secret key>
+BREVO_API_KEY=<Brevo API key>
+```
+
+Set `TURNSTILE_SECRET_KEY` and `BREVO_API_KEY` as encrypted secrets. Keep
+`CONTACT_FROM` and `CONTACT_TO` in `wrangler.toml` unless the defaults need to
+change.
 
 Deploy to the generated `*.pages.dev` URL and verify:
 
@@ -152,11 +157,7 @@ before changing DNS:
 - Confirm the Cloudflare build log shows `next build` completed successfully.
 - Confirm the Pages deployment is not using `.next`, `public`, or the repo root
   as the output directory.
-- Confirm the Pages deployment is not expecting a `_worker.js` or Pages
-  Functions output for the homepage.
-- Confirm no Cloudflare Worker route is attached to `xeontek.com/*` or
-  `www.xeontek.com/*`; only `/api/contact` and `/api/apply` should go to the
-  Worker.
+- Confirm Pages Functions are only used for `/api/contact` and `/api/apply`.
 
 ## Phase 2: Prepare Turnstile
 
@@ -170,12 +171,12 @@ localhost
 
 Use the site key in Cloudflare Pages.
 
-Set the Worker secret in the Cloudflare dashboard or with Wrangler.
+Set the Turnstile secret in the Pages project.
 
 Dashboard path:
 
 ```text
-Workers & Pages -> xeontek-contact -> Settings -> Variables and Secrets
+Workers & Pages -> xeontek -> Settings -> Variables and Secrets
 ```
 
 Add:
@@ -184,93 +185,37 @@ Add:
 TURNSTILE_SECRET_KEY=<production Turnstile secret key>
 ```
 
-If using Wrangler, first check whether local auth is usable:
+## Phase 3: Prepare Pages Functions And Email
 
-```bash
-npx wrangler whoami
-```
-
-If `whoami` works, set the secret:
-
-```bash
-npx wrangler secret put TURNSTILE_SECRET_KEY
-```
-
-If `wrangler login` opens a browser but does not complete, or appears to do
-nothing after authorisation, use the Cloudflare dashboard instead. A CI/API-token
-workflow is also valid, but the migration does not require local Wrangler auth
-just to set this secret.
-
-## Phase 3: Prepare Worker And Email
-
-Authenticate Wrangler only if you are deploying the Worker from the command
-line:
-
-```bash
-npx wrangler login
-```
-
-Check auth before deploying:
-
-```bash
-npx wrangler whoami
-```
-
-If local auth is unreliable, deploy the Worker through Cloudflare's dashboard or
-use a scoped `CLOUDFLARE_API_TOKEN` in CI instead of relying on interactive
-login.
-
-Dry-run the Worker:
-
-```bash
-npx wrangler deploy --dry-run
-```
-
-Deploy the Worker:
-
-```bash
-npm run deploy:contact
-```
-
-Confirm the Worker routes exist in Cloudflare for:
+Pages Functions deploy with the Cloudflare Pages project from the top-level
+`functions/` directory. Confirm the routes exist after deployment:
 
 ```text
-xeontek.com/api/contact
-www.xeontek.com/api/contact
-xeontek.com/api/apply
-www.xeontek.com/api/apply
+https://<project>.pages.dev/api/contact
+https://<project>.pages.dev/api/apply
+https://www.xeontek.com/api/contact
+https://www.xeontek.com/api/apply
 ```
 
-The Worker uses this email binding:
+Configure Brevo:
 
-```toml
-[[send_email]]
-name = "CONTACT_EMAIL"
-destination_address = "enquiries@xeontek.com"
-
-[vars]
-CONTACT_FROM = "website@xeontek.com"
-CONTACT_TO = "enquiries@xeontek.com"
-```
+1. Verify the sending domain or sender used by `CONTACT_FROM`.
+2. Create a transactional API key.
+3. Add the key to the Pages project as `BREVO_API_KEY`.
 
 Keep the current Google Workspace MX records unless inbound email is being
-migrated separately. The Cloudflare Worker mail path and the domain's inbound
-mail routing are separate decisions.
+migrated separately. Do not enable Cloudflare Email Routing as part of this site
+migration because it requires replacing Google Workspace MX records.
 
-Before production cutover, verify in Cloudflare that the `send_email` binding is
-active and can deliver to `enquiries@xeontek.com`.
-
-Worker variables/secrets and Pages variables are separate. Check both:
+Check Pages variables and secrets:
 
 ```text
 Pages project:
   NEXT_PUBLIC_TURNSTILE_SITE_KEY
-
-Worker:
   TURNSTILE_SECRET_KEY
+  BREVO_API_KEY
   CONTACT_FROM
   CONTACT_TO
-  CONTACT_EMAIL send_email binding
 ```
 
 ## Phase 4: DNS Cutover
@@ -355,7 +300,7 @@ Verify:
   are pointed at it.
 - `xeontek.com` and `www.xeontek.com` resolve to Cloudflare Pages.
 - The selected canonical host redirects correctly.
-- `/api/contact` and `/api/apply` are handled by the Cloudflare Worker.
+- `/api/contact` and `/api/apply` are handled by Pages Functions.
 - Contact form submission succeeds.
 - Application form submission succeeds if careers are active.
 - Emails arrive at `enquiries@xeontek.com`.
@@ -392,6 +337,6 @@ CNAME www -> f5d6e445b93fc940.vercel-dns-017.com
 ```
 
 3. Confirm `https://www.xeontek.com` responds with Vercel again.
-4. Leave the Cloudflare Pages deployment and Worker in place for investigation.
+4. Leave the Cloudflare Pages deployment in place for investigation.
 5. Fix the issue, redeploy, and repeat the verification checklist before
    attempting cutover again.
