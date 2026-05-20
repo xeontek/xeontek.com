@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "next dev --port 4000",
-    "build": "next build",
+    "build": "node scripts/check-public-env.mjs && next build",
     "preview": "wrangler pages dev out",
     "deploy:static": "wrangler pages deploy out --project-name xeontek",
     "deploy:contact": "wrangler deploy --config wrangler.contact.toml",
