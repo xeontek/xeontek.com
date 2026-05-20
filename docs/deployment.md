@@ -100,8 +100,8 @@ CONTACT_FROM=website@xeontek.com
 CONTACT_TO=enquiries@xeontek.com
 ```
 
-The required secret names are declared in `wrangler.toml`, but their values must
-be added as encrypted Pages secrets before deployment.
+Add the required secret values in Cloudflare Pages before deployment. They are
+not stored in `wrangler.toml`.
 
 Deploy static pages with:
 

@@ -99,10 +99,13 @@ Validate the repo before creating or changing production records:
 ```bash
 npm install
 npm run lint
-npm run build
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=<production Turnstile site key> npm run build
 ```
 
-The build must produce `out/`.
+The local build command needs the public Turnstile key in the shell
+environment because `npm run build` validates that key before `next build`.
+Cloudflare Pages reads the same public key from `wrangler.toml`. The build must
+produce `out/`.
 
 ## Phase 1: Prepare Cloudflare Pages
 
@@ -121,22 +124,52 @@ and make sure the final output directory remains `out`. Do not configure the
 Pages project to serve `.next`, `public`, the repo root, or a Next adapter
 output.
 
-Set this public Pages build variable in `wrangler.toml`:
+The root `wrangler.toml` is the Pages build configuration source of truth. Keep
+it Pages-only; do not add Worker-only keys such as `main`, `routes`, or
+`send_email`.
 
-```text
-NEXT_PUBLIC_TURNSTILE_SITE_KEY=<production Turnstile site key>
+Set public Pages variables in `wrangler.toml`:
+
+```toml
+[vars]
+NEXT_PUBLIC_TURNSTILE_SITE_KEY = "<production Turnstile site key>"
+CONTACT_FROM = "website@xeontek.com"
+CONTACT_TO = "enquiries@xeontek.com"
 ```
 
-Add these values in the Pages project under Settings -> Variables and Secrets:
+Cloudflare build logs should show the public variables from `wrangler.toml`:
+
+```text
+Build environment variables:
+  - NEXT_PUBLIC_TURNSTILE_SITE_KEY: ...
+  - CONTACT_FROM: website@xeontek.com
+  - CONTACT_TO: enquiries@xeontek.com
+```
+
+Do not add a `[secrets]` block to `wrangler.toml`. Cloudflare Pages currently
+uses Wrangler 3.x in the build pipeline and warns about unexpected top-level
+`secrets` fields.
+
+Add these secret values in the Pages project under Settings -> Variables and
+Secrets:
 
 ```text
 TURNSTILE_SECRET_KEY=<production Turnstile secret key>
 BREVO_API_KEY=<Brevo API key>
 ```
 
-Set `TURNSTILE_SECRET_KEY` and `BREVO_API_KEY` as encrypted secrets. Keep
-`CONTACT_FROM` and `CONTACT_TO` in `wrangler.toml` unless the defaults need to
-change.
+If the UI exposes a Secret type, use it for `TURNSTILE_SECRET_KEY` and
+`BREVO_API_KEY`. If the UI only exposes text variables, use Wrangler Pages
+secrets instead:
+
+```bash
+npx wrangler pages secret put TURNSTILE_SECRET_KEY --project-name xeontek
+npx wrangler pages secret put BREVO_API_KEY --project-name xeontek
+```
+
+Never commit `TURNSTILE_SECRET_KEY` or `BREVO_API_KEY`. The public
+`NEXT_PUBLIC_TURNSTILE_SITE_KEY` is safe to commit because it is embedded in
+browser code by design.
 
 Deploy to the generated `*.pages.dev` URL and verify:
 
@@ -166,10 +199,11 @@ Create or update the Cloudflare Turnstile widget to allow:
 ```text
 xeontek.com
 www.xeontek.com
+xeontek.pages.dev
 localhost
 ```
 
-Use the site key in Cloudflare Pages.
+Use the site key in `wrangler.toml` as `NEXT_PUBLIC_TURNSTILE_SITE_KEY`.
 
 Set the Turnstile secret in the Pages project.
 
@@ -203,6 +237,13 @@ Configure Brevo:
 2. Create a transactional API key.
 3. Add the key to the Pages project as `BREVO_API_KEY`.
 
+For Brevo API-key IP authorization, do not enter a laptop/home IP, Google
+Workspace IP, or Cloudflare DNS IP. Cloudflare Pages Functions do not provide a
+stable per-site outbound IP. If Brevo's IP authorization is optional, leave it
+unset or use Brevo's automatic learning/authorization flow. If Brevo requires a
+fixed authorized IP before issuing a key, use a different provider such as
+Resend instead.
+
 Keep the current Google Workspace MX records unless inbound email is being
 migrated separately. Do not enable Cloudflare Email Routing as part of this site
 migration because it requires replacing Google Workspace MX records.
@@ -210,12 +251,14 @@ migration because it requires replacing Google Workspace MX records.
 Check Pages variables and secrets:
 
 ```text
-Pages project:
+wrangler.toml public variables:
   NEXT_PUBLIC_TURNSTILE_SITE_KEY
-  TURNSTILE_SECRET_KEY
-  BREVO_API_KEY
   CONTACT_FROM
   CONTACT_TO
+
+Cloudflare Pages secrets:
+  TURNSTILE_SECRET_KEY
+  BREVO_API_KEY
 ```
 
 ## Phase 4: DNS Cutover
@@ -291,6 +334,7 @@ dig +short CNAME www.xeontek.com
 curl -I -L https://xeontek.com
 curl -I -L https://www.xeontek.com
 curl -I -L https://www.xeontek.com/api/contact
+curl -I -L https://xeontek.pages.dev/api/contact
 ```
 
 Verify:
@@ -301,6 +345,8 @@ Verify:
 - `xeontek.com` and `www.xeontek.com` resolve to Cloudflare Pages.
 - The selected canonical host redirects correctly.
 - `/api/contact` and `/api/apply` are handled by Pages Functions.
+- A GET request to `/api/contact` returns `405 Method not allowed`, which means
+  the function route exists and is rejecting non-POST requests correctly.
 - Contact form submission succeeds.
 - Application form submission succeeds if careers are active.
 - Emails arrive at `enquiries@xeontek.com`.

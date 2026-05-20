@@ -170,31 +170,54 @@ export async function sendBrevoEmail(
   env: Env,
   message: BrevoMessage,
 ): Promise<boolean> {
-  if (!env.BREVO_API_KEY) return false;
+  if (!env.BREVO_API_KEY) {
+    console.error("Brevo email send failed: BREVO_API_KEY is not configured.");
+    return false;
+  }
 
   const from = env.CONTACT_FROM ?? DEFAULT_FROM;
   const to = env.CONTACT_TO ?? DEFAULT_TO;
-  const response = await fetch("https://api.brevo.com/v3/smtp/email", {
-    method: "POST",
-    headers: {
-      accept: "application/json",
-      "api-key": env.BREVO_API_KEY,
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      sender: {
-        name: "XeonTek Website",
-        email: from,
-      },
-      to: [{ email: to }],
-      replyTo: message.replyTo,
-      subject: cleanHeader(message.subject),
-      textContent: message.textContent,
-      attachment: message.attachment,
-    }),
-  });
 
-  return response.ok;
+  try {
+    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "api-key": env.BREVO_API_KEY,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        sender: {
+          name: "XeonTek Website",
+          email: from,
+        },
+        to: [{ email: to }],
+        replyTo: message.replyTo,
+        subject: cleanHeader(message.subject),
+        textContent: message.textContent,
+        attachment: message.attachment,
+      }),
+    });
+
+    if (!response.ok) {
+      console.error("Brevo email send failed.", {
+        status: response.status,
+        body: await response.text(),
+        from,
+        to,
+      });
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Brevo email send failed with an exception.", {
+      message: error instanceof Error ? error.message : String(error),
+      from,
+      to,
+    });
+    return false;
+  }
 }
 
 export async function fileToBase64(file: File): Promise<string> {
