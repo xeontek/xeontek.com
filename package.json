@@ -11,7 +11,7 @@
     "build": "next build",
     "preview": "wrangler pages dev out",
     "deploy:static": "wrangler pages deploy out --project-name xeontek",
-    "deploy:contact": "wrangler deploy",
+    "deploy:contact": "wrangler deploy --config wrangler.contact.toml",
     "lint": "tsc --noEmit"
   },
   "dependencies": {

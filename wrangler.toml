@@ -1,20 +1,4 @@
 name = "xeontek"
-main = "worker/contact.ts"
 compatibility_date = "2026-05-18"
 preview_urls = true
 pages_build_output_dir = "out"
-
-routes = [
-  { pattern = "xeontek.com/api/contact", zone_name = "xeontek.com" },
-  { pattern = "www.xeontek.com/api/contact", zone_name = "xeontek.com" },
-  { pattern = "xeontek.com/api/apply", zone_name = "xeontek.com" },
-  { pattern = "www.xeontek.com/api/apply", zone_name = "xeontek.com" },
-]
-
-[[send_email]]
-name = "CONTACT_EMAIL"
-destination_address = "enquiries@xeontek.com"
-
-[vars]
-CONTACT_FROM = "website@xeontek.com"
-CONTACT_TO = "enquiries@xeontek.com"

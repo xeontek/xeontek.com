@@ -46,6 +46,10 @@ Deploy the contact form Worker:
 npm run deploy:contact
 ```
 
+The Pages project uses `wrangler.toml`. The contact form Worker uses
+`wrangler.contact.toml`, so Cloudflare Pages can validate the root config during
+GitHub builds.
+
 Route the Worker only to:
 
 ```text

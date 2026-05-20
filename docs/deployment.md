@@ -73,6 +73,10 @@ This repo uses `next.config.ts` with `output: "export"`, so Cloudflare Pages
 should serve the static export in `out`. Do not point Pages at `.next`, `public`,
 the repo root, or a Next adapter output.
 
+The root `wrangler.toml` is intentionally Pages-only. Cloudflare Pages reads it
+during GitHub builds, so it must not contain Worker-only keys such as `main`,
+`routes`, or `send_email`.
+
 Set this Pages environment variable:
 
 ```text
@@ -164,8 +168,8 @@ Deploy the Worker:
 npm run deploy:contact
 ```
 
-Worker routes are configured in `wrangler.toml`. Normal page traffic stays on
-Cloudflare Pages; only form endpoints invoke the Worker.
+Worker routes are configured in `wrangler.contact.toml`. Normal page traffic
+stays on Cloudflare Pages; only form endpoints invoke the Worker.
 
 Before cutover, confirm the Worker routes exist in Cloudflare:
 
