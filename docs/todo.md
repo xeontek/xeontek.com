@@ -6,8 +6,7 @@ active checklist.
 ## Website Checks
 
 - [ ] Run `npm run lint`.
-- [ ] Run `npm run build`.
-- [ ] Run `npx wrangler deploy --dry-run`.
+- [ ] Run `NEXT_PUBLIC_TURNSTILE_SITE_KEY=0x4AAAAAADSoOOQRbYdZ9vrI npm run build`.
 - [ ] Preview with `npm run preview`.
 - [ ] Check desktop and mobile layouts.
 - [ ] Check keyboard navigation across nav, footer, forms, and research links.
@@ -19,6 +18,8 @@ active checklist.
 - [ ] Confirm Open Graph metadata uses absolute production URLs.
 - [ ] Validate structured data for Organization, WebSite, CollectionPage, and
       CreativeWork entries.
+- [ ] Confirm `/api/contact` returns `405` for GET and form POST succeeds.
+- [ ] Confirm production apex redirects to `https://www.xeontek.com/`.
 
 ## AI Governance
 

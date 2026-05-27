@@ -10,6 +10,7 @@ type BrevoMessage = {
     name?: string;
   };
   textContent: string;
+  htmlContent?: string;
   attachment?: BrevoAttachment[];
 };
 
@@ -192,9 +193,10 @@ export async function sendBrevoEmail(
           email: from,
         },
         to: [{ email: to }],
-        replyTo: message.replyTo,
+        replyTo: cleanReplyTo(message.replyTo),
         subject: cleanHeader(message.subject),
         textContent: message.textContent,
+        htmlContent: message.htmlContent ?? textToHtml(message.textContent),
         attachment: message.attachment,
       }),
     });
@@ -281,6 +283,28 @@ function isEmail(value: unknown): value is string {
 
 function cleanHeader(value: string): string {
   return value.replace(/[\r\n]/g, " ").slice(0, 160);
+}
+
+function cleanReplyTo(replyTo: BrevoMessage["replyTo"]): BrevoMessage["replyTo"] {
+  return {
+    email: replyTo.email,
+    name: replyTo.name ? cleanHeader(replyTo.name) : undefined,
+  };
+}
+
+function textToHtml(text: string): string {
+  return `<html><body><pre style="font-family:Arial,sans-serif;white-space:pre-wrap">${escapeHtml(
+    text,
+  )}</pre></body></html>`;
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 function corsHeaders(request: Request): HeadersInit {

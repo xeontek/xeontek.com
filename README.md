@@ -13,7 +13,7 @@ npm run dev
 ## Build
 
 ```bash
-npm run build
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=0x4AAAAAADSoOOQRbYdZ9vrI npm run build
 ```
 
 The static export is written to `out/`.
@@ -36,7 +36,7 @@ Full setup notes are in [`docs/deployment.md`](./docs/deployment.md).
 Deploy the static site to Cloudflare Pages:
 
 ```bash
-npm run build
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=0x4AAAAAADSoOOQRbYdZ9vrI npm run build
 npm run deploy
 ```
 
@@ -65,9 +65,19 @@ Required Cloudflare setup:
 1. Create a Turnstile widget for `xeontek.com`.
 2. Set the public key as `NEXT_PUBLIC_TURNSTILE_SITE_KEY` in `wrangler.toml`.
 3. Verify the sending domain or sender in Brevo.
-4. Add `TURNSTILE_SECRET_KEY` and `BREVO_API_KEY` as encrypted Pages secrets.
+4. Add `TURNSTILE_SECRET_KEY` and `BREVO_API_KEY` as Pages secrets.
 5. Keep `CONTACT_FROM` and `CONTACT_TO` in `wrangler.toml` unless the defaults
    need to change.
 
 The default sender is `website@xeontek.com` and the default recipient is
 `enquiries@xeontek.com`.
+
+Tail production function logs with:
+
+```bash
+npx wrangler pages deployment tail \
+  --project-name xeontek \
+  --environment production \
+  --format pretty \
+  --method POST
+```
